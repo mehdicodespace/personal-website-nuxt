@@ -16,8 +16,8 @@
             ]"
           >
             <!-- Skeleton background for loading -->
-            <div 
-              v-if="!mediaLoaded" 
+            <div
+              v-if="!mediaLoaded"
               class="absolute inset-0 skeleton-bg pointer-events-none"
             ></div>
             <video
@@ -25,13 +25,15 @@
               @play="videoPlaying = true"
               @pause="videoPlaying = false"
               @loadeddata="onMediaLoad"
+              @error="onMediaLoad"
               :class="[
                 'absolute h-full w-full rounded-lg screenVideo',
                 { 'object-cover': !videoControls },
                 { 'opacity-0': enableHoverEffects && !isHovered },
                 { 'opacity-100': !enableHoverEffects || isHovered },
               ]"
-              v-show="media?.type === 'video'"
+              v-if="media?.type === 'video'"
+              :preload="enableHoverEffects ? 'none' : 'metadata'"
               :src="media?.src"
               :controls="videoControls"
               controlsList="nodownload"
@@ -46,7 +48,7 @@
             /> -->
           </div>
         </div>
-        <span class="label sm:inline-block xs:hidden">MehdiCode.com</span>
+        <span class="label sm:inline-block xs:hidden">MehdiSpace.com</span>
       </div>
       <div :class="aboutPage ? 'md:block xs:hidden' : 'sm:block xs:hidden'">
         <div class="keys" v-if="!onlyScreen">
@@ -66,6 +68,7 @@
 import { mapWritableState } from "pinia";
 import useProjectsStore from "@/stores/projects";
 export default {
+  emits: ['media-ready'],
   props: {
     aboutPage: {
       default: false,
@@ -101,6 +104,25 @@ export default {
     ...mapWritableState(useProjectsStore, ["videoPlaying"]),
   },
   methods: {
+    loadBackgroundImage() {
+      clearTimeout(this.mediaTimeout);
+      this.mediaLoaded = false;
+      const src = this.media?.type === 'img' ? this.media.src : this.media?.poster;
+      if (!src) {
+        // A video without a poster must remain interactive so it can be played.
+        this.mediaLoaded = true;
+        return;
+      }
+      this.mediaTimeout = setTimeout(() => { this.mediaLoaded = true; }, 8000);
+      const img = new Image();
+      img.onload = img.onerror = () => {
+        if (this.media?.src === src || this.media?.poster === src) {
+          clearTimeout(this.mediaTimeout);
+          this.mediaLoaded = true;
+        }
+      };
+      img.src = src;
+    },
     getBackgroundImage() {
       if (this.media?.type === 'img') {
         return `url(${this.media?.src})`;
@@ -119,62 +141,37 @@ export default {
     },
     handleHover(hovering) {
       if (!this.enableHoverEffects) return;
-      
       this.isHovered = hovering;
-      
-      if (this.media?.type === 'video') {
-        // Use nextTick to ensure video element is ready
-        this.$nextTick(() => {
-          if (this.$refs.video) {
-            if (hovering) {
-              // Ensure video is loaded before playing
-              if (this.$refs.video.readyState >= 2) { // HAVE_CURRENT_DATA
-                this.$refs.video.play().catch(err => {
-                  console.log('Video play failed:', err);
-                });
-              } else {
-                // Wait for video to load
-                this.$refs.video.addEventListener('canplay', () => {
-                  this.$refs.video.play().catch(err => {
-                    console.log('Video play failed after load:', err);
-                  });
-                }, { once: true });
-              }
-            } else {
-              // Stop video when leaving hover
-              this.$refs.video.pause();
-              this.$refs.video.currentTime = 0; // Reset to beginning
-            }
-          }
-        });
-      }
+      if (this.media?.type !== 'video') return;
+      this.$nextTick(() => {
+        const video = this.$refs.video;
+        if (!video) return;
+        if (this.isHovered) {
+          video.muted = true;
+          // play() loads the video on demand; leaving hover cancels playback.
+          video.play().catch(() => {});
+        } else {
+          video.pause();
+          if (video.readyState > 0) video.currentTime = 0;
+        }
+      });
     },
     onMediaLoad() {
       this.mediaLoaded = true;
     },
   },
+  mounted() {
+    this.loadBackgroundImage();
+  },
+  beforeUnmount() {
+    clearTimeout(this.mediaTimeout);
+  },
   watch: {
-    media: {
-      handler() {
-        // Reset loading state when media changes
-        this.mediaLoaded = false;
-        
-        // For background images, we need to check if they're loaded
-        // Only do this on client side to avoid SSR issues
-        if (this.media?.type === 'img') {
-          if (typeof window !== 'undefined') {
-            const img = new Image();
-            img.onload = () => {
-              this.mediaLoaded = true;
-            };
-            img.src = this.media.src;
-          } else {
-            // On server side, assume image is loaded to avoid skeleton showing
-            this.mediaLoaded = true;
-          }
-        }
-      },
-      immediate: true,
+    mediaLoaded(ready) {
+      this.$emit('media-ready', ready);
+    },
+    media() {
+      this.loadBackgroundImage();
     },
   },
 };

@@ -16,15 +16,30 @@ a {
   -webkit-tap-highlight-color: transparent;
 }
 
-.fadeScale-enter-active,
+.fadeScale-enter-active {
+  transition: opacity 0.38s ease-out, transform 0.42s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
 .fadeScale-leave-active {
-  transition: all 0.5s;
+  transition: opacity 0.26s ease-in, transform 0.3s cubic-bezier(0.4, 0, 1, 1);
+  will-change: opacity, transform;
 }
 
-.fadeScale-enter-from,
-.fadeScale-leave-to {
-  transform: translateY(30px);
+.fadeScale-enter-from {
+  transform: translate3d(0, 18px, 0) scale(0.985);
   opacity: 0;
+}
+.fadeScale-leave-to {
+  transform: translate3d(0, 10px, 0) scale(0.99);
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fadeScale-enter-active,
+  .fadeScale-leave-active {
+    transition-duration: 0.01ms;
+    will-change: auto;
+  }
 }
 
 .fade-enter-active,
@@ -35,6 +50,18 @@ a {
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
+}
+
+.page-content-enter {
+  animation: page-content-enter 0.62s cubic-bezier(0.22, 0.61, 0.36, 1) backwards;
+}
+.page-content-enter--delayed { animation-delay: 90ms; }
+@keyframes page-content-enter {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .page-content-enter { animation: none; }
 }
 
 .marqueeY {
@@ -86,6 +113,37 @@ a {
 body {
   font-family: "Roboto", inter, arial;
   color: white;
+}
+
+/* Content-shaped placeholders reserve the final layout while it loads. */
+.content-pending [data-skeleton] {
+  position: relative;
+  overflow: hidden;
+  color: transparent !important;
+  border-color: transparent !important;
+  border-radius: 8px;
+  pointer-events: none;
+  user-select: none;
+}
+.content-pending [data-skeleton] > * { visibility: hidden; animation: down-to-up 2s ease-in-out normal; }
+.content-pending [data-skeleton]::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  background: linear-gradient(100deg, #303030 20%, #404040 45%, #303030 70%);
+  background-size: 200% 100%;
+  animation: content-shimmer 1.4s linear infinite;
+}
+@keyframes content-shimmer { to { background-position: -200% 0; } }
+a:focus-visible, button:focus-visible, input:focus-visible {
+  outline: 2px solid #f47a08;
+  outline-offset: 4px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .content-pending [data-skeleton]::after { animation: none; }
+  .content-pending [data-skeleton] > *, .loading > * { visibility: visible; transform: none; animation: none; }
+  .textLoading::before { animation: none; }
 }
 
 ::-webkit-scrollbar {
@@ -145,13 +203,17 @@ td {
 }
 .loading > * {
   position: relative;
-  animation: down-to-up 2s ease-in-out normal;
+  visibility: hidden;
+  animation: down-to-up 2s ease-in-out both;
 }
 .textLoading::before {
   content: "";
   position: absolute;
   height: 100%;
   width: 100%;
+  z-index: 1;
+  border-radius: inherit;
+  pointer-events: none;
   background: linear-gradient(90deg, #404040 25%, #555555 50%, #404040 75%);
   transform: translateX(-152%);
   animation: text-progress-loading 2s ease-in-out normal;
@@ -210,12 +272,19 @@ td {
 
 @keyframes down-to-up {
   0% {
+    visibility: hidden;
+    transform: translateY(100%);
+  }
+  69% {
+    visibility: hidden;
     transform: translateY(100%);
   }
   70% {
+    visibility: visible;
     transform: translateY(100%);
   }
   100% {
+    visibility: visible;
     transform: translateY(0);
   }
 }

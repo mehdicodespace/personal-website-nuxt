@@ -1,10 +1,12 @@
 <template>
-  <Title>
-    Mehdi Rafiei | {{ cachedProjectName }} Project | Front-end Developer
-  </Title>
+  <Title>{{ project.name }} Project | Mehdi Rafiei</Title>
+  <Meta name="description" :content="seoDescription" />
+  <Meta property="og:type" content="website" />
+  <Meta property="og:title" :content="`${project.name} Project | Mehdi Rafiei`" />
+  <Meta property="og:description" :content="seoDescription" />
 
   <div
-    class="relative bg-dark/70 rounded-lg flex flex-col items-center py-10 border border-neutral-700 xl:(ml-42 mr-40 px-22) lg:(ml-30 mr-30 px-18) md:(px-14 mt-30) sm:(px-8 mx-12 mt-30) xs:(px-6 mx-8 mt-24)"
+    class="page-content-enter relative bg-dark/70 rounded-lg flex flex-col items-center py-10 px-4 sm:px-8 lg:px-12 xl:px-16 border border-neutral-700 mx-8 sm:mx-12 xl:mx-20 mt-24 sm:mt-30"
   >
     <nuxt-link
       :to="{ path: '/portfolios' }"
@@ -15,35 +17,27 @@
       </button>
       <span class="text-main-orange font-bold text-lg">Portfolios</span>
     </nuxt-link>
-    <div class="loading textLoading inline-block">
-      <span class="inline-block font-medium text-3xl text-center">
-        <span class="text-main-orange mr-2">{{ project.name }}</span>
-        <span>{{ project.title }}</span>
-      </span>
-    </div>
-    
-    <!-- Category Badge -->
-    <div class="loading textLoading inline-block mt-4">
-      <span class="bg-main-orange/20 text-main-orange px-4 py-2 rounded-full text-sm font-medium">
-        {{ project.category }}
-      </span>
-    </div>
-    <div class="loading sm:w-8/12 mx-auto textLoading inline-block mt-2">
-      <p class="text-lg text-center">{{ project.description }}</p>
-    </div>
+    <span class="inline-block font-medium text-3xl text-center">
+      <span class="text-main-orange mr-2">{{ project.name }}</span>
+      <span>{{ project.title }}</span>
+    </span>
 
-    <div class="loading textLoading inline-block mt-4">
-      <ul class="flex gap-4 mt-2">
-        <li v-for="skill in project.used">
-          <img
-            :src="`/imgs/skills/${skill}.svg`"
-            alt=""
-            class="w-8 h-8"
-            :title="skill"
-          />
-        </li>
-      </ul>
-    </div>
+    <!-- Category Badge -->
+    <span class="mt-4 bg-main-orange/20 text-main-orange px-4 py-2 rounded-full text-sm font-medium">
+      {{ project.category }}
+    </span>
+    <p class="sm:w-8/12 mx-auto mt-2 text-lg text-center">{{ project.description }}</p>
+
+    <ul class="flex gap-4 mt-4">
+      <li v-for="skill in project.used" :key="skill">
+        <img
+          :src="`/imgs/skills/${skill}.svg`"
+          alt=""
+          class="w-8 h-8"
+          :title="skill"
+        />
+      </li>
+    </ul>
     <div
       class="w-full grid lg:grid-cols-4 sm:(grid-cols-3 grid-rows-3) xs:(grid-rows-4 grid-cols-2) gap-4 mt-8"
     >
@@ -62,11 +56,11 @@
         :key="mediaIndex"
       >
         <!-- Skeleton background -->
-        <div 
-          v-if="!mediaLoaded[mediaIndex]" 
+        <div
+          v-if="!mediaLoaded[mediaIndex]"
           class="absolute inset-0 skeleton-bg pointer-events-none"
         ></div>
-        
+
         <img
           v-if="media?.type === 'img'"
           :src="media.src"
@@ -109,7 +103,6 @@ import useProjectsStore from "@/stores/projects";
 export default {
   data() {
     return {
-      cachedProjectName: "",
       mediaLoaded: [],
       skeletonMinTime: 500, // Minimum time to show skeleton (500ms)
     };
@@ -120,6 +113,14 @@ export default {
       "portfolios",
       "galleryVisible",
     ]),
+    seoDescription() {
+      const description = `${this.project.name}: ${this.project.description}`
+        .replace(/\s+/g, " ")
+        .trim();
+      return description.length <= 155
+        ? description
+        : `${description.slice(0, 152).replace(/\s+\S*$/, "").trimEnd()}...`;
+    },
     otherMedia() {
       return this.project.media
         .filter((media, index) => {
@@ -136,17 +137,17 @@ export default {
           message: `${projectName} Project not found`,
           fatal: true,
         });
-      } else this.cachedProjectName = project.name;
+      }
       return project;
     },
   },
   mounted() {
     // Initialize mediaLoaded state for all media items
     this.mediaLoaded = new Array(this.otherMedia.length).fill(false);
-    
+
     // Record when skeleton loading started
     this.skeletonStartTime = Date.now();
-    
+
     // Fallback for SSR: ensure all images become visible after a timeout
     this.$nextTick(() => {
       setTimeout(() => {
@@ -160,16 +161,11 @@ export default {
   },
   methods: {
     ...mapActions(useProjectsStore, ["showGallery"]),
-    updatePageTitle() {
-      console.log("test");
-
-      document.title = `Mehdi Rafiei | ${this.project.name} | Front-end Developer`;
-    },
     onImageLoad(mediaIndex) {
       // Image loaded successfully - ensure minimum skeleton time
       const elapsed = Date.now() - this.skeletonStartTime;
       const remainingTime = Math.max(0, this.skeletonMinTime - elapsed);
-      
+
       setTimeout(() => {
         this.mediaLoaded[mediaIndex] = true;
       }, remainingTime);
@@ -178,7 +174,7 @@ export default {
       // Video loaded successfully - ensure minimum skeleton time
       const elapsed = Date.now() - this.skeletonStartTime;
       const remainingTime = Math.max(0, this.skeletonMinTime - elapsed);
-      
+
       setTimeout(() => {
         this.mediaLoaded[mediaIndex] = true;
       }, remainingTime);

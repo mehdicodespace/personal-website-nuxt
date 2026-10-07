@@ -71,6 +71,10 @@ export default {
       });
       return counts;
     },
+    projectTransitionKey() {
+      const projectIds = Array.isArray(this.projects) ? this.projects.map(project => project.id).join('|') : '';
+      return `${this.selectedCategory}|${projectIds}`;
+    },
     settings() {
       if (process.client) {
         let width = window.innerWidth;
@@ -260,115 +264,32 @@ export default {
       </div>
     </div>
   </section>
-  <section
-    class="xl:(mt-16 pl-24 pr-22) lg:(pl-17 pr-14 ) sm:(pl-16 pr-14) xs:(px-10 mt-16 w-full)"
-    v-else
-  >
-    <div class="relative text-3xl font-bold">
-      <span
-        class="updown inline-block absolute -top-1 -left-2.5 w-14 h-14 bg-main-orange rounded-full"
-      ></span>
-          <div class="loading textLoading inline-block">
-            <span class="relative inline-block z-20"
-              >Projects
-              <span class="text-lg hidden md:inline">({{ totalProjectsCount }} total)</span></span
-            >
-          </div>
+  <section class="mt-12 w-full px-8 sm:px-12 xl:px-20" v-else>
+    <div class="mb-7">
+      <h1 class="text-4xl font-bold">Projects <span class="text-main-orange">&amp; Portfolio</span></h1>
     </div>
-    
-    <!-- Category Filter -->
-    <div class="mt-8 mb-6">
-      <Shared-CategoryFilter 
-        :selected-category="selectedCategory"
-        :category-counts="categoryCounts"
-        @category-selected="onCategorySelected"
-      />
-    </div>
-    <div class="mt-10">
-      <transition-group 
-        name="project-filter" 
-        tag="section" 
-        class="grid lg:grid-cols-2 gap-6"
-        style="min-height: 300px;"
-      >
-        <div
-          v-for="project in projects"
-          :key="project.id"
-          class="relative bg-dark/70 rounded-lg flex lg:(flex-col gap-8) md:(pr-16 pl-18) shadow-lg xs:(py-8 pr-4 pl-4 flex-col gap-4 items-center) project-item"
-        >
-        <nuxt-link
-          :to="{ path: `/project/${project.name}` }"
-          class="absolute z-30 w-full h-full"
-        >
-        </nuxt-link>
-        <Shared-Screen
-          @click="showGallery(project.id)"
-          :media="project.media[project.mainMedia]"
-          :enable-hover-effects="true"
-          class="relative z-50 xl:min-w-120 xl:w-140 lg:(min-w-116 w-116 mx-initial) md:(w-140 mx-auto) sm:w-110 xs:(w-86)"
-          screen-height="xl:h-74 lg:h-66 md:h-74 h-70"
-        />
-        <section
-          class="flex flex-col gap-2 mt-2 flex-wrap items-start lg:items-center xs:(items-center)"
-        >
-          <div class="loading textLoading inline-block">
-            <span
-              class="inline-block font-medium text-2xl lg:text-left xs:text-center"
-            >
-              <span class="text-main-orange mr-2">{{ project.name }}</span>
-              <span>{{ project.title }}</span>
-            </span>
-          </div>
-          <div class="loading textLoading inline-block">
-            <p class="text-lg text-center hidden md:block">
-              {{ project.description }}
-            </p>
-          </div>
-
-          <!--          <div class="loading textLoading inline-block">-->
-          <!--            <p class="text-main-green font-bold mt-6">Technologies</p>-->
-          <!--          </div>-->
-          <!--          <div class="loading textLoading inline-block">-->
-          <!--            <ul class="flex gap-4 mt-2">-->
-          <!--              <li v-for="skill in project.used">-->
-          <!--                <img-->
-          <!--                  :src="`/imgs/skills/${skill}.svg`"-->
-          <!--                  alt=""-->
-          <!--                  class="w-8 h-8"-->
-          <!--                  :title="skill"-->
-          <!--                />-->
-          <!--              </li>-->
-          <!--            </ul>-->
-          <!--          </div>-->
-        </section>
-      </div>
-      </transition-group>
-    </div>
+    <Shared-CategoryFilter :selected-category="selectedCategory" :category-counts="categoryCounts" @category-selected="onCategorySelected" />
+    <TransitionGroup :key="projectTransitionKey" name="blog-card" tag="div" class="portfolio-grid" appear>
+      <Shared-ProjectCard v-for="(project, index) in projects" :key="project.id" :project="project" :style="{ '--blog-card-delay': `${Math.min(index, 5) * 55}ms` }" />
+    </TransitionGroup>
   </section>
 </template>
 <style>
+.portfolio-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 24px; margin-top: 28px; }
+@media (min-width: 650px) { .portfolio-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1280px) { .portfolio-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 .carousel__viewport {
   border-radius: 8px;
 }
 
-/* Project Filter Animations */
-.project-filter-enter-active,
-.project-filter-leave-active {
-  transition: all 0.4s ease;
-}
-
-.project-filter-enter-from {
-  opacity: 0;
-  transform: translateY(30px) scale(0.9);
-}
-
-.project-filter-leave-to {
-  opacity: 0;
-  transform: translateY(-30px) scale(0.9);
-}
-
-.project-filter-move {
-  transition: transform 0.4s ease;
+.blog-card-enter-active { transition: opacity .46s cubic-bezier(.22, .61, .36, 1), transform .46s cubic-bezier(.22, .61, .36, 1); transition-delay: var(--blog-card-delay, 0ms); }
+.blog-card-enter-from { opacity: 0; transform: translateY(14px); }
+.blog-card-move { transition: transform .4s cubic-bezier(.22, .61, .36, 1); }
+.project-card.blog-card-enter-active { transition: opacity .46s cubic-bezier(.22, .61, .36, 1), transform .46s cubic-bezier(.22, .61, .36, 1); transition-delay: var(--blog-card-delay, 0ms); }
+.project-card.blog-card-enter-from { opacity: 0; transform: translateY(14px); }
+.project-card.blog-card-move { transition: transform .4s cubic-bezier(.22, .61, .36, 1); }
+@media (prefers-reduced-motion: reduce) {
+  .blog-card-enter-active, .blog-card-move, .project-card.blog-card-enter-active, .project-card.blog-card-move { transition-duration: .01ms; transition-delay: 0ms; }
 }
 
 /* Ensure single items stay in first column position */

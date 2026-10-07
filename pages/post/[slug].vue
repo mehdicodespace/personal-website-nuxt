@@ -1,12 +1,16 @@
 <template>
-  <Title>Mehdi Rafiei | {{ post.title }} | Front-end Developer</Title>
+  <Title>{{ post.title }} | Mehdi Rafiei</Title>
+  <Meta name="description" :content="seoDescription" />
+  <Meta property="og:type" content="article" />
+  <Meta property="og:title" :content="`${post.title} | Mehdi Rafiei`" />
+  <Meta property="og:description" :content="seoDescription" />
 
   <div
-    class="relative xl:(ml-42 mr-40 px-22) lg:(ml-30 mr-30 px-18) md:(px-14 mt-30) sm:(px-8 mx-12 mt-30) xs:(px-6 mx-8 mt-24)"
+    class="page-content-enter relative mx-8 sm:mx-12 xl:mx-20 mt-24 sm:mt-30"
   >
     <!-- Top Progress Bar -->
     <div class="top-progress-bar">
-      <div 
+      <div
         class="progress-fill"
         :class="{ 'progress-complete': readProgress >= 95 }"
         :style="{ width: readProgress + '%' }"
@@ -32,7 +36,7 @@
              <div class="flex lg:flex-row flex-col gap-8 mt-10">
                <!-- Main Content -->
                <div
-                 class="flex-1 bg-dark/70 rounded-lg p-8 lg:px-12 md:px-8 sm:px-6 xs:px-4 border border-neutral-700 shadow-lg animate-slide-up"
+                 class="flex-1 min-w-0 bg-dark/70 rounded-lg p-4 sm:p-6 md:p-8 lg:px-12 border border-neutral-700 shadow-lg"
                >
                  <!-- Enhanced Title and Image Section -->
                  <div class="relative mb-6 lg:mb-8">
@@ -52,11 +56,11 @@
                          :class="['w-full h-full object-cover relative z-10 transition-all duration-700 blog-hero-image', { 'loaded': imageLoaded }]"
                          @load="onImageLoad"
                        />
-                       
+
                        <!-- Gradient overlay -->
                        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent z-20"></div>
-                       
-                       
+
+
                        <!-- Reading time overlay -->
                        <div class="absolute top-4 right-4 z-30">
                          <div class="px-2 py-1 bg-black/50 text-white text-xs sm:text-sm rounded-full backdrop-blur-sm flex items-center gap-1">
@@ -85,7 +89,7 @@
                      <span class="text-gray-300 text-lg">Processing code blocks...</span>
                    </div>
                  </div>
-                 
+
                  <!-- Content with highlighting -->
                  <div
                    v-else
@@ -96,7 +100,7 @@
 
       <!-- Sidebar -->
       <aside
-        class="lg:w-80 bg-dark/70 rounded-lg p-6 xl:px-6 lg:px-6 md:px-8 sm:px-6 xs:px-4 border border-neutral-700 shadow-lg lg:sticky lg:top-6 lg:max-h-[calc(100vh-3rem)] lg:overflow-y-auto sidebar-scrollable animate-slide-up lg:h-fit space-y-6"
+        class="lg:w-80 bg-dark/70 rounded-lg p-6 xl:px-6 lg:px-6 md:px-8 sm:px-6 xs:px-4 border border-neutral-700 shadow-lg lg:sticky lg:top-6 lg:max-h-[calc(100vh-3rem)] lg:overflow-y-auto sidebar-scrollable lg:h-fit space-y-6"
       >
                  <!-- Reading Progress -->
                  <div class="sidebar-section">
@@ -130,9 +134,9 @@
         <!-- Social Share -->
         <div class="sidebar-section">
           <h3 class="text-lg font-bold text-main-orange mb-4">Share Article</h3>
-          <Shared-SocialShare 
-            :title="post.title" 
-            :url="shareUrl" 
+          <Shared-SocialShare
+            :title="post.title"
+            :url="shareUrl"
           />
         </div>
 
@@ -211,6 +215,12 @@ export default {
   },
   computed: {
     ...mapState(usePostsStore, ["getPost"]),
+    seoDescription() {
+      const description = this.post.description.replace(/\s+/g, " ").trim();
+      return description.length <= 155
+        ? description
+        : `${description.slice(0, 152).replace(/\s+\S*$/, "").trimEnd()}...`;
+    },
     post() {
       const slug = this.$route.params.slug;
       const post = this.getPost(slug);
@@ -261,13 +271,13 @@ export default {
   mounted() {
     // Record when skeleton loading started
     this.skeletonStartTime = Date.now();
-    
+
     // Start highlighting immediately for better performance
     this.startHighlighting();
-    
+
     // Initialize progress bar
     this.initProgressBar();
-    
+
     // Fallback for SSR: ensure image becomes visible after a timeout
     this.$nextTick(() => {
       setTimeout(() => {
@@ -298,7 +308,7 @@ export default {
       // Ensure minimum skeleton time for client-side loads
       const elapsed = Date.now() - this.skeletonStartTime;
       const remainingTime = Math.max(0, this.skeletonMinTime - elapsed);
-      
+
       setTimeout(() => {
         this.imageLoaded = true;
       }, remainingTime);
@@ -365,31 +375,31 @@ export default {
              },
     initProgressBar() {
       if (!process.client) return;
-      
+
       // Add scroll listener
       window.addEventListener('scroll', this.updateProgress);
     },
     updateProgress() {
       if (!process.client) return;
-      
+
       const article = document.querySelector('.prose');
       if (!article) return;
-      
+
       const articleTop = article.offsetTop;
       const articleHeight = article.offsetHeight;
       const windowHeight = window.innerHeight;
       const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-      
+
       // Calculate progress based on how much of the article has been scrolled through
       const scrolled = Math.max(0, scrollTop - articleTop);
       const totalScrollable = Math.max(1, articleHeight - windowHeight + articleTop);
       let progress = Math.min(100, Math.max(0, (scrolled / totalScrollable) * 100));
-      
+
       // Ensure it reaches 100% when at the bottom
       if (scrollTop + windowHeight >= document.documentElement.scrollHeight - 10) {
         progress = 100;
       }
-      
+
       this.readProgress = Math.round(progress);
     },
              highlightCode() {
@@ -414,7 +424,7 @@ export default {
              startHighlighting() {
                if (this.highlightingStarted) return;
                this.highlightingStarted = true;
-               
+
                // Run highlighting immediately for better performance
                if (process.client) {
                  this.highlightCode();
@@ -430,27 +440,27 @@ export default {
                try {
                  // Use highlightAll for better coverage
                  hljs.highlightAll();
-                 
+
                  // Mark highlighting as complete
                  this.isHighlighting = false;
                } catch (error) {
                  console.error('Error in highlightAll():', error);
-                 
+
                  // Fallback to individual highlighting
                  const codeBlocks = document.querySelectorAll('pre code[class*="language-"]');
-                 
+
                  codeBlocks.forEach((block, index) => {
                    try {
                      // Clear any existing highlighting
                      block.innerHTML = block.textContent;
-                     
+
                      // Apply highlighting
                      hljs.highlightElement(block);
                    } catch (error) {
                      console.error(`Error highlighting block ${index}:`, error);
                    }
                  });
-                 
+
                  // Mark highlighting as complete even if there were errors
                  this.isHighlighting = false;
                }
@@ -634,32 +644,6 @@ export default {
          .sidebar-section h3 {
            margin-bottom: 0.75rem;
          }
-
-/* Animations for hero and content sections */
-.animate-fade-in {
-  animation: fadeIn 0.8s ease-in-out;
-}
-.animate-slide-up {
-  animation: slideUp 0.8s ease-in-out;
-}
-@keyframes fadeIn {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-@keyframes slideUp {
-  0% {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
 
 /* Blog image loading states */
 .blog-hero-image {

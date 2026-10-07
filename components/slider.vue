@@ -1,392 +1,128 @@
 <template>
-  <div class="slider-wrapper relative">
-  <!-- Skeleton Layout (Static) -->
-  <div
-    class="skeleton-container transition-all duration-700 ease-out"
-    :class="showSkeleton ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 translate-y-4 pointer-events-none'"
-  >
-    <div
-      v-for="(item, i) in visibleSkeletonItems"
-      :key="`skeleton-${i}`"
-      class="skeleton-slide"
-      :class="{ 'skeleton-active': i === Math.floor(visibleSkeletonItems.length / 2) }"
-    >
-      <div class="relative w-full h-full">
-        <!-- Skeleton image -->
-        <div class="skeleton-image rounded-xl w-full h-full"></div>
-        
-        <!-- Skeleton date badge -->
-        <div class="absolute top-3 left-3 flex items-center gap-2 bg-black bg-opacity-20 rounded-lg p-1">
-          <div class="skeleton-icon w-5 h-5 rounded"></div>
-          <div class="skeleton-date w-16 h-4 rounded"></div>
-        </div>
-        
-        
-        <!-- Skeleton content -->
-        <div class="p-4 pb-8 flex flex-col gap-2 backdrop-blur-[6px] bg-black w-full absolute bottom-0 rounded-xl bg-opacity-15">
-          <div class="skeleton-title h-6 rounded w-3/4"></div>
-          <div class="skeleton-description h-4 rounded w-full"></div>
-          <div class="skeleton-description h-4 rounded w-2/3"></div>
-        </div>
-      </div>
+  <div ref="wrapper" class="article-carousel" :aria-busy="showSkeleton">
+    <div v-show="showSkeleton" class="article-skeletons" :class="{ 'is-visible': showSkeleton }" aria-hidden="true">
+      <div v-for="n in 3" :key="n" class="article-skeleton"><span></span><span></span></div>
     </div>
-  </div>
-
-  <!-- Real Carousel -->
-  <div
-    class="swiper-container transition-all duration-700 ease-out absolute top-0 left-0 w-full"
-    :class="showSkeleton ? 'opacity-0 scale-105 translate-y-4 pointer-events-none' : 'opacity-100 scale-100 translate-y-0'"
-  >
-    <swiper
-      :effect="sliderConfig.effect"
-      :grabCursor="sliderConfig.grabCursor"
-      :centeredSlides="sliderConfig.centeredSlides"
-      :slidesPerView="sliderConfig.slidesPerView"
-      :autoplay="sliderConfig.autoplay"
-      :speed="sliderConfig.speed"
-      :coverflowEffect="sliderConfig.coverflowEffect"
-      :loop="sliderConfig.loop"
-      :breakpoints="breakpoints"
-      :observe="sliderConfig.observe"
-      :observe-parents="sliderConfig.observeParents"
-      :pagination="sliderConfig.pagination"
+    <Swiper
+      class="article-swiper"
+      :class="{ 'is-loading': showSkeleton }"
+      :inert="showSkeleton ? '' : undefined"
       :modules="modules"
-      class="mySwiper"
-      :initial-slide="sliderConfig.initialSlide"
+      effect="coverflow"
+      :grab-cursor="true"
+      :centered-slides="true"
+      :slides-per-view="1.4"
+      :breakpoints="{ 650: { slidesPerView: 2 }, 1000: { slidesPerView: 3 } }"
+      :loop="items.length >= 6"
+      :initial-slide="Math.min(2, items.length - 1)"
+      :coverflow-effect="{ rotate: 28, stretch: 0, depth: 130, modifier: 1, slideShadows: false }"
+      :autoplay="{ delay: 5000, disableOnInteraction: true, pauseOnMouseEnter: true }"
+      :speed="650"
+      :pagination="{ clickable: true }"
+      :resize-observer="true"
+      @focusin="carousel?.autoplay.stop()"
       @swiper="onSwiper"
-      @slideChange="onSlideChange"
     >
-      <swiper-slide
-        v-for="(item, i) in items"
-        :key="item.id"
-        class="group overflow-hidden relative"
-      >
-        <NuxtLink :to="`/post/${item.slug}`" class="relative block w-full h-full">
-          <img
-            class="rounded-xl w-full h-full transition-all duration-800 ease-out group-hover:scale-110"
-            :src="`/imgs/blog/${item.img}`"
-            :loading="i < 3 ? 'eager' : 'lazy'"
-            alt=""
-          />
-          <div
-            class="absolute text-white top-3 left-3 flex items-center gap-2 bg-black bg-opacity-20 rounded-lg p-1 z-10"
-          >
-            <svg class="w-5 h-5 select-none">
-              <IconClock />
-            </svg>
-            <span class="text-sm">{{ item.date }}</span>
-          </div>
-          <div
-            class="absolute inline-flex justify-center items-center w-14 h-14 rounded-full bg-black bg-opacity-70 top-1/2 left-1/2 transform -translate-x-1/2 transition-all duration-400 ease-out opacity-0 -translate-y-30 scale-150 group-hover:-translate-y-16 group-hover:opacity-100 group-hover:scale-100 z-20"
-          >
-            <svg class="w-6 h-6 text-white select-none">
-              <IconLink />
-            </svg>
-          </div>
-          <div
-            class="p-4 transition-all duration-300 ease-out pb-8 flex flex-col gap-2 backdrop-blur-[6px] bg-black w-full absolute bottom-0 left-0 right-0 rounded-xl bg-opacity-30 group-hover:bg-opacity-70 z-10"
-            :class="activeIndex === i && 'bg-opacity-50'"
-          >
-            <h2 class="text-lg text-gray-100">{{ item.title }}</h2>
-            <p class="text-gray-100 text-md opacity-70">
-              {{ truncatedDescription(item.description) }}
-            </p>
+      <SwiperSlide v-for="item in items" :key="item.id">
+        <NuxtLink :to="`/post/${item.slug}`" class="article-slide-link">
+          <img :src="`/imgs/blog/${item.img}`" :alt="item.title" loading="lazy" draggable="false" />
+          <time class="article-date">{{ item.date }}</time>
+          <div class="article-caption">
+            <h3>{{ item.title }}</h3>
+            <p>{{ item.description }}</p>
+            <span class="article-read">Read article <span aria-hidden="true">↗</span></span>
           </div>
         </NuxtLink>
-      </swiper-slide>
-    </swiper>
-  </div>
+      </SwiperSlide>
+    </Swiper>
+    <div class="article-controls" v-if="!showSkeleton" aria-label="Article carousel controls">
+      <button type="button" aria-label="Previous article" @click="carousel?.slidePrev()">←</button>
+      <span>Explore the latest writing</span>
+      <button type="button" aria-label="Next article" @click="carousel?.slideNext()">→</button>
+    </div>
   </div>
 </template>
 
-<script>
-import { Swiper, SwiperSlide } from "swiper/vue";
-import "swiper/css";
-import "swiper/css/effect-coverflow";
-import "swiper/css/pagination";
-import {
-  EffectCoverflow,
-  Pagination,
-  Autoplay,
-  Navigation,
-} from "swiper/modules";
+<script setup>
+import { ref, watch, nextTick, onMounted, onBeforeUnmount } from 'vue';
+import { Swiper, SwiperSlide } from 'swiper/vue';
+import { EffectCoverflow, Pagination, Autoplay, A11y } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/effect-coverflow';
+import 'swiper/css/pagination';
 
-export default {
-  components: {
-    Swiper,
-    SwiperSlide,
-  },
-  props: {
-    items: {
-      type: Array,
-      required: true,
-      validator: (items) =>
-        items.every(
-          (item) =>
-            typeof item.img === "string" &&
-            typeof item.title === "string" &&
-            typeof item.description === "string" &&
-            typeof item.date === "string" &&
-            typeof item.slug === "string",
-        ),
-    },
-    showSkeleton: {
-      type: Boolean,
-      default: false,
-    },
-    breakpoints: {
-      type: Object,
-      default: () => ({
-        650: { slidesPerView: 2 },
-        1100: { slidesPerView: 3 },
-        1500: { slidesPerView: 4.1 },
-      }),
-    },
-    sliderConfig: {
-      type: Object,
-      default: () => ({
-        effect: "coverflow",
-        grabCursor: true,
-        centeredSlides: true,
-        slidesPerView: 1.5,
-        autoplay: {
-          delay: 5000,
-          disableOnInteraction: true,
-        },
-        speed: 1200,
-        coverflowEffect: {
-          rotate: 45,
-          stretch: 0,
-          depth: 100,
-          modifier: 1,
-          slideShadows: true,
-        },
-        loop: true,
-        observe: true,
-        observeParents: true,
-        pagination: true,
-        initialSlide: 2,
-      }),
-    },
-  },
-  data() {
-    return {
-      activeIndex: 0,
-      swiperInitialized: false,
-    };
-  },
-  computed: {
-    visibleSkeletonItems() {
-      // Show only 5 items for skeleton (like the real carousel)
-      return this.items.slice(0, 5);
-    },
-  },
-  methods: {
-    onSwiper(swiper) {
-      console.log(swiper);
-    },
-    onSlideChange(swiper) {
-      this.activeIndex = swiper?.activeIndex;
-      console.log(swiper, "slide change");
-    },
-    truncatedDescription(description, limit = 100) {
-      if (description?.length > limit) {
-        return description.substring(0, limit) + "...";
-      }
-      return description;
-    },
-    waitForImages() {
-      return new Promise((resolve) => {
-        const images = this.$el.querySelectorAll('img');
-        if (images.length === 0) {
-          resolve();
-          return;
-        }
-        
-        let loadedCount = 0;
-        const totalImages = images.length;
-        
-        const checkComplete = () => {
-          loadedCount++;
-          if (loadedCount === totalImages) {
-            resolve();
-          }
-        };
-        
-        images.forEach((img) => {
-          if (img.complete) {
-            checkComplete();
-          } else {
-            img.addEventListener('load', checkComplete);
-            img.addEventListener('error', checkComplete);
-          }
-        });
-      });
-    },
-  },
-  mounted() {
-    if (!this.showSkeleton) {
-      this.$nextTick(() => {
-        // Wait for images to load before initializing swiper
-        this.waitForImages().then(() => {
-          setTimeout(() => {
-            this.swiperInitialized = true;
-          }, 50);
-        });
-      });
-    }
-  },
-  beforeDestroy() {
-    this.swiperInitialized = false;
-  },
-  setup() {
-    return {
-      modules: [EffectCoverflow, Pagination, Autoplay, Navigation],
-    };
-  },
-};
+const props = defineProps({ items: { type: Array, required: true }, showSkeleton: Boolean });
+const modules = [EffectCoverflow, Pagination, Autoplay, A11y];
+const wrapper = ref(null);
+let carousel;
+let observer;
+let visible = false;
+let reduceMotion = false;
+
+function syncCarousel() {
+  if (!carousel || carousel.destroyed) return;
+  carousel.update();
+  if (visible && !props.showSkeleton && !reduceMotion) carousel.autoplay.start();
+  else carousel.autoplay.stop();
+}
+function onSwiper(instance) {
+  carousel = instance;
+  syncCarousel();
+}
+watch(() => props.showSkeleton, async () => { await nextTick(); syncCarousel(); });
+onMounted(() => {
+  reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  observer = new IntersectionObserver(([entry]) => {
+    visible = entry.isIntersecting;
+    syncCarousel();
+  }, { threshold: 0.1 });
+  observer.observe(wrapper.value);
+});
+onBeforeUnmount(() => observer?.disconnect());
 </script>
 
-<style>
-.swiper-container {
-  width: 100%;
-  display: flex;
+<style scoped>
+.article-carousel { --card-height: clamp(230px, 28vw, 380px); position: relative; width: 100%; min-width: 0; max-width: 1400px; min-height: calc(var(--card-height) + 56px); margin: 0 auto; }
+.article-swiper { width: 100%; min-width: 0; padding: 20px 0 36px; opacity: 1; transform: translateY(0); transition: opacity .7s ease, transform .7s ease; pointer-events: none; }
+.article-swiper.is-loading { opacity: 0; transform: translateY(16px); }
+.article-swiper :deep(.swiper-slide) { height: var(--card-height); overflow: hidden; border: 1px solid #ffffff12; border-radius: 14px; transition: border-color .3s, box-shadow .3s; }
+.article-swiper :deep(.swiper-slide-active) { border-color: #f47a0870; box-shadow: 0 18px 42px #0007; }
+.article-swiper :deep(.swiper-slide), .article-swiper :deep(.swiper-slide a) { pointer-events: auto; }
+.article-swiper :deep(.swiper-slide:not(.swiper-slide-active)) .article-slide-link { opacity: .74; }
+.article-swiper :deep(.swiper-slide:not(.swiper-slide-active)) img { filter: saturate(.7); }
+.article-swiper :deep(.swiper-slide:hover) .article-slide-link, .article-swiper :deep(.swiper-slide:focus-within) .article-slide-link { opacity: 1; }
+.article-swiper :deep(.swiper-slide:hover) img, .article-swiper :deep(.swiper-slide:focus-within) img { filter: saturate(1); transform: scale(1.045); }
+.article-swiper :deep(.swiper-slide-active) .article-slide-link { box-shadow: inset 0 0 0 1px #f47a0870; }
+.article-swiper :deep(.swiper-pagination-bullet) { background: #f47a08; }
+.article-slide-link { display: block; position: relative; width: 100%; height: 100%; overflow: hidden; color: white; cursor: pointer; transition: opacity .25s; border-radius: inherit; background: #222; }
+.article-slide-link:focus-visible { outline-offset: -3px; }
+.article-slide-link img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s, filter .3s; }
+.article-slide-link::after { content: ''; position: absolute; inset: 0; z-index: 1; pointer-events: none; background: linear-gradient(180deg, #0003 0%, transparent 30%, #0003 52%, #050505e8 100%); }
+.article-date, .article-caption { z-index: 2; pointer-events: none; }
+.article-read { display: flex; justify-content: space-between; color: #ffb26b; font-size: .85rem; font-weight: 600; margin-top: 12px; }
+.article-read > span { transition: transform .2s; }
+.article-slide-link:hover .article-read > span { transform: translate(2px, -2px); }
+.article-controls { display: flex; justify-content: center; align-items: center; gap: 20px; margin: 2px 0 12px; }
+.article-controls span { color: #ffffff70; font-size: .85rem; }
+.article-controls button { width: 40px; height: 40px; border-radius: 50%; border: 1px solid #ffffff20; background: #252525; transition: border-color .2s, color .2s; }
+.article-controls button:hover { border-color: #f47a08; color: #f47a08; }
+.article-date { position: absolute; top: 12px; left: 12px; border-radius: 6px; background: #0009; padding: 5px 8px; font-size: .8rem; }
+.article-caption { position: absolute; inset: auto 0 0; padding: 24px 18px 18px; background: transparent; }
+.article-caption h3 { font-size: 1.15rem; font-weight: 650; line-height: 1.35; letter-spacing: -.01em; }
+.article-caption p { margin-top: 8px; color: #ffffffb3; font-size: .9rem; line-height: 1.5; }
+.article-caption h3, .article-caption p { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; }
+.article-skeletons { position: absolute; inset: 20px 0 36px; display: flex; gap: 20px; justify-content: center; overflow: hidden; opacity: 0; transform: translateY(-8px); transition: opacity .7s ease, transform .7s ease; pointer-events: none; }
+.article-skeletons.is-visible { opacity: 1; transform: translateY(0); }
+.article-skeleton { position: relative; flex: 0 0 32%; height: var(--card-height); border-radius: 14px; background: linear-gradient(100deg, #292929 25%, #3c3c3c 50%, #292929 75%); background-size: 200% 100%; animation: article-shimmer 1.3s linear infinite; }
+.article-skeleton span { position: absolute; left: 18px; right: 18px; bottom: 55px; height: 22px; background: #ffffff09; border-radius: 5px; }
+.article-skeleton span + span { bottom: 24px; right: 35%; height: 14px; }
+.article-skeleton:not(:nth-child(2)) { transform: scale(.9); }
+@keyframes article-shimmer { to { background-position: -200% 0; } }
+@media (max-width: 649px) {
+  .article-caption { padding: 20px 12px 12px; background: linear-gradient(180deg, transparent 0%, #050505b8 38%, #050505f2 100%); }
+  .article-caption h3 { font-size: 1.1rem; line-height: 1.4; text-shadow: 0 2px 8px #000; }
+  .article-caption p { display: none; }
+  .article-skeleton { flex-basis: 70%; }
 }
-
-.swiper-pagination-bullet {
-  background: white;
-}
-
-/* Fix pointer events for clickable cards - only for home carousel */
-.home-carousel .mySwiper {
-  pointer-events: none;
-}
-
-.home-carousel .mySwiper .swiper-slide {
-  pointer-events: auto;
-}
-
-.home-carousel .mySwiper .swiper-slide a {
-  pointer-events: auto;
-}
-
-
-/* Skeleton loading styles */
-.skeleton-image,
-.skeleton-icon,
-.skeleton-date,
-.skeleton-title,
-.skeleton-description {
-  background: linear-gradient(90deg, #2a2a2a 25%, #3a3a3a 50%, #2a2a2a 75%);
-  background-size: 200% 100%;
-  animation: skeleton-loading 1.5s infinite;
-}
-
-@keyframes skeleton-loading {
-  0% {
-    background-position: -200% 0;
-  }
-  100% {
-    background-position: 200% 0;
-  }
-}
-
-
-/* Slider wrapper */
-.slider-wrapper {
-  width: 100%;
-  padding: 2rem 0;
-  min-height: 480px;
-}
-
-/* Skeleton container styles */
-.skeleton-container {
-  width: 100%;
-  display: flex;
-  gap: 1rem;
-  justify-content: center;
-  align-items: center;
-  perspective: 1000px;
-  padding: 0 2rem;
-  position: relative;
-  overflow: visible;
-}
-
-/* Create equal spacing on both sides - only show 5 items */
-.skeleton-container::before {
-  content: '';
-  flex: 0 0 300px;
-  max-width: 300px;
-}
-
-.skeleton-container::after {
-  content: '';
-  flex: 0 0 300px;
-  max-width: 300px;
-}
-
-.skeleton-slide {
-  width: 350px;
-  height: 420px;
-  border-radius: 12px;
-  position: relative;
-  transform: scale(0.8);
-  opacity: 0.6;
-  transition: all 0.3s ease;
-  flex-shrink: 0;
-}
-
-.skeleton-slide.skeleton-active {
-  transform: scale(1);
-  opacity: 1;
-  z-index: 2;
-}
-
-/* Responsive heights */
-@media (max-width: 768px) {
-  .slider-wrapper {
-    min-height: 300px;
-  }
-  
-  .skeleton-container {
-    gap: 0.5rem;
-    padding: 0 1rem;
-  }
-  
-  .skeleton-slide {
-    width: 300px;
-    height: 360px;
-  }
-  
-  /* Match actual carousel height to skeleton */
-  .mySwiper .swiper-slide {
-    height: 360px !important;
-  }
-  
-  .mySwiper .swiper-slide img {
-    height: 360px;
-    object-fit: cover;
-  }
-}
-
-@media (max-width: 480px) {
-  .slider-wrapper {
-    min-height: 250px;
-  }
-  
-  .skeleton-slide {
-    width: 260px;
-    height: 320px;
-  }
-  
-  /* Match actual carousel height to skeleton */
-  .mySwiper .swiper-slide {
-    height: 320px !important;
-  }
-  
-  .mySwiper .swiper-slide img {
-    height: 320px;
-    object-fit: cover;
-  }
-}
+@media (prefers-reduced-motion: reduce) { .article-swiper, .article-skeletons { transition: none; } .article-skeleton { animation: none; } }
 </style>

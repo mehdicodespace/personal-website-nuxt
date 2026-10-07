@@ -8,12 +8,12 @@ export default defineNuxtConfig({
   },
           app: {
             head: {
-              title: "Mehdi Rafiei | Front-end Developer",
+              title: "Mehdi Rafiei | Senior Front-End Developer",
               meta: [
                 {
                   name: "description",
                   content:
-                    "Experienced front end developer knowledge about UI/UX Design, TDD, Nuxt, Vue, PWA, TWA, Responsive design & etc",
+                    "Mehdi Rafiei is a senior front-end developer with 8+ years building Vue, Nuxt, React and Next.js products, plus hands-on back-end, API and deployment experience.",
                 },
               ],
               link: [],

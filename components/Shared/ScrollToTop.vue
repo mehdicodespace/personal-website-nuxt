@@ -1,7 +1,7 @@
 <template>
   <transition name="scroll-to-top">
     <button
-      v-if="isVisible"
+      v-if="isVisible && !galleryVisible"
       @click="scrollToTop"
       class="scroll-to-top-btn"
       aria-label="Scroll to top"
@@ -14,12 +14,18 @@
 </template>
 
 <script>
+import { mapState } from "pinia";
+import useProjectsStore from "@/stores/projects";
+
 export default {
   data() {
     return {
       isVisible: false,
       scrollThreshold: 300, // Show button after scrolling 300px
     };
+  },
+  computed: {
+    ...mapState(useProjectsStore, ["galleryVisible"]),
   },
   mounted() {
     if (process.client) {
@@ -55,7 +61,7 @@ export default {
   position: fixed;
   bottom: 2rem;
   right: 2rem;
-  z-index: 1000;
+  z-index: 80;
   width: 3rem;
   height: 3rem;
   background: linear-gradient(135deg, #f47a08 0%, #ff9a33 100%);
@@ -138,6 +144,6 @@ export default {
 
 /* Ensure button is above other elements */
 .scroll-to-top-btn {
-  z-index: 9999;
+  z-index: 80;
 }
 </style>

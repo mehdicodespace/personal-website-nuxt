@@ -49,7 +49,7 @@
             </div>
             <div class="blog-card-author-info">
               <span class="blog-card-author-name">Mehdi Rafiei</span>
-              <span class="blog-card-author-title">Front-end Developer</span>
+              <span class="blog-card-author-title">Senior Front-End Developer</span>
             </div>
           </div>
         </div>

@@ -17,7 +17,7 @@
           <div class="circle" style="--data-number: 3">
             <img src="/imgs/JS.png" draggable="false" class="icon" alt="" />
             <img
-              src="https://mehdicode.com//imgs/html.png"
+              src="/imgs/html.png"
               draggable="false"
               class="icon"
               alt=""

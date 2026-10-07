@@ -1,254 +1,100 @@
 <template>
-  <Title>Mehdi Rafiei | About me | Front-end Developer</Title>
+  <Title>About Mehdi Rafiei | Senior Front-End Developer</Title>
+  <Meta name="description" content="Meet Mehdi Rafiei, a senior front-end developer with 8+ years building Vue, Nuxt, React and Next.js products, with hands-on back-end and API experience." />
+  <Meta property="og:title" content="About Mehdi Rafiei | Senior Front-End Developer" />
+  <Meta property="og:description" content="Front-end engineering is Mehdi Rafiei’s specialty; his experience also spans back-end features, APIs, databases and production deployment." />
 
-  <div
-      class="relative xl:px-22 lg:(px-18 w-full) mx-auto md:px-16 sm:px-14 xs:px-12 xs:w-full"
-  >
-    <div
-        class="relative xl:mt-16 lg:mt-26 md:mt-20 xs:mt-16 text-3xl font-bold"
-    >
-      <span
-          class="updown inline-block absolute -top-1 -left-2.5 w-14 h-14 bg-main-orange rounded-full"
-      ></span>
-      <div class="loading textLoading inline-block">
-        <span class="relative inline-block">About Me</span>
-      </div>
-    </div>
-
-    <div >
-      <div class="flex-1 sm:(order-1 mr-10) xs:order-2">
-        <div class="flex items-start gap-6">
-          <div class="loading textLoading mt-5 inline-block">
-            <p class="text-lg">
-              <strong>Over 6 years’ experience</strong> building high-performance, responsive, and SEO-friendly web applications in <strong>FinTech, cryptocurrency, and
-              e-commerce</strong>.
-              <br/>
-              Led front-end development for 10+ major projects using modern frameworks to deliver
-              <strong>seamless, scalable UI/UX for global audiences.</strong>
-              <br/><br/>
-              <strong>Open to Hybrid, Remote and Relocation Opportunities..</strong>
-            </p>
-          </div>
-        </div>
-
-        <div class="relative lg:mt-12 md:mt-14 xs:mt-12 text-2xl font-bold">
-          <span
-              class="updown inline-block absolute -top-1 -left-2.5 w-12 h-12 bg-main-orange/70 rounded-full"
-          ></span>
-          <div class="loading textLoading inline-block">
-            <span class="relative inline-block">Skills</span>
-          </div>
-        </div>
-
-        <ul class="flex flex-col gap-4 mt-8">
-          <li class="" v-for="skill in skills">
-            <div class="loading textLoading inline-block">
-              <div class="sm:inline-flex gap-2">
-                <span
-                    class="text-xl inline-block font-medium text-main-orange  sm:inline-block xs:block"
-                >
-                  {{ skill.title }}:
-                </span>
-                <span>{{ skill.items }}</span>
-              </div>
-            </div>
-          </li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="relative mt-14 text-2xl font-bold">
-      <span
-          class="updown inline-block absolute -top-1 -left-2.5 w-12 h-12 bg-main-orange/70 rounded-full"
-      ></span>
-      <div class="loading textLoading inline-block">
-        <span class="relative inline-block"
-        >Experiences
-          <span class="text-lg" v-if="experiences.length"
-          >({{ experiences.length }} Items)</span
-          ></span
-        >
-      </div>
-    </div>
-
-    <div class="mt-8 flex flex-col gap-6">
-      <div
-          ref="experienceRefs"
-          :class="[
-            'transition-max-height duration-400 ease-linear relative bg-dark/70 py-10 2xl:py-6 px-6 border border-zinc-700 rounded-md flex gap-4 overflow-hidden max-h-[148px]'
-          ]"
-          v-for="(experience, index) in experiences"
-          :key="experience.id"
-      >
-        <span
-            class="sm:relative xs:absolute inline-block min-w-8 h-8 bg-main-orange rounded-full flex items-center justify-center"
-        >
-          <span
-              class="inline-block w-7 h-7 bg-main-orange border-7 border-dark rounded-full"
-          ></span>
-        </span>
-
-        <div class="sm:w-[calc(100%-2rem)] xs:w-full">
-          <div>
-            <div
-                class="w-full flex justify-between items-start sm:flex-row xs:flex-col"
-            >
-              <h3
-                  class="sm:w-9/12 xs:w-full text-xl text-main-orange font-medium"
-              >
-                <span class="sm:ml-0 xs:ml-12">{{ experience.company }}</span>
-                <span
-                    class="text-white lg:(inline-block mb-0 mt-0 ml-2) xs:(block mt-4)"
-                >({{ experience.role }})</span
-                >
-              </h3>
-              <div
-                  :class="[
-                  'select-none transition duration-300 ease-in-out flex gap-2 items-center cursor-pointer sm:(absolute top-9 right-8 mb-0) xs:(relative top-2 min-w-36 mb-12)',
-                  experience.showDetails ? 'text-red' : 'text-main-green',
-                ]"
-                  @click="toggleDetails(index, experience)"
-              >
-                <IconEyeClose v-if="experience.showDetails" class="w-8 h-8 text-white-3 select-none" />
-                <IconEyeOpen v-else class="w-8 h-8 text-white-3 select-none" />
-                <p class="text-lg font-bold">
-                  {{ experience.showDetails ? "Hide Details" : "Show Details" }}
-                </p>
-              </div>
-            </div>
-
-            <p :class="['mt-2 text-lg', experience.showDetails]">
-              {{ experience.bio }}
-            </p>
-
-            <p :class="['mt-1 text-white/60', experience.showDetails]">
-              {{ experience.startDate }} - {{ experience.endDate }} ·
-              {{ experience.duration }}
-            </p>
-          </div>
-
-          <p class="mt-14 font-bold text-main-green">Some of tasks:</p>
-          <ul class="flex flex-col gap-2 mt-2 text-white/80 w-11/12">
-            <li
-                v-for="task in experience.tasks"
-                class="flex items-center gap-2"
-            >
-              <span
-                  class="inline-block min-w-2 min-h-2 bg-stone-400 rounded-full"
-              ></span>
-              <p>{{ task }}</p>
-            </li>
-          </ul>
-
-          <template v-if="getPortfolios(null, experience.id)?.length">
-            <p class="mt-8 font-bold text-main-cyan">
-              Related Projects:
-              <span class="text-sm text-white/80"
-              >({{
-                  getPortfolios(null, experience.id)?.length
-                }}
-                Projects)</span
-              >
-            </p>
-
-            <Shared-Projects
-                :current-slider-num="index + 1"
-                :show-details-buttom="false"
-                :slides-per-view="3"
-                :about-page="true"
-                :projects="getPortfolios(null, experience.id)"
-                :breakpoints="related_projects_breakpoints"
-            />
-          </template>
+  <main class="about-page page-content-enter">
+    <section class="about-hero" aria-labelledby="about-title">
+      <div class="about-intro">
+        <p class="about-eyebrow about-hero-eyebrow">THE PERSON BEHIND THE CODE</p>
+        <h1 id="about-title">Building interfaces<br />people <span>rely on.</span></h1>
+        <p class="about-lead">I’m Mehdi Rafiei, a senior front-end developer with 8+ years building production web products across fintech, crypto, e-commerce, and real estate. I specialize in Vue, Nuxt, React, and Next.js, turning complex requirements into clear, responsive interfaces.</p>
+        <p class="about-subtext">Front-end engineering is my strongest area, and I’ve also built back-end features, REST APIs, and database-backed services, then taken products through deployment. That end-to-end experience helps me make practical decisions across the stack while keeping the user experience at the center.</p>
+        <div class="about-actions">
+          <NuxtLink to="/contact-me" class="about-primary">Let’s work together <span aria-hidden="true">↗</span></NuxtLink>
+          <NuxtLink to="/portfolios">Explore my projects →</NuxtLink>
         </div>
       </div>
+      <aside class="about-profile">
+        <img src="/imgs/about/mehdi.jpg" alt="Mehdi Rafiei" width="400" height="400" />
+        <div><h2>Mehdi Rafiei</h2><p>Senior Front-End Developer</p><span class="about-availability">Open to remote, hybrid &amp; relocation</span></div>
+      </aside>
+    </section>
+
+    <div class="about-stats" aria-label="Career overview">
+      <div><strong>8+</strong><span>Years of experience</span></div>
+      <div><strong>{{ getPortfolios().length }}</strong><span>Projects in my portfolio</span></div>
+      <div><strong>Vue · Nuxt · React · Next.js</strong><span>My core ecosystem</span></div>
     </div>
 
-    <div class="relative mt-20 text-2xl font-bold">
-      <span
-          class="updown inline-block absolute -top-1 -left-2.5 w-12 h-12 bg-main-orange/70 rounded-full"
-      ></span>
-      <div class="loading textLoading inline-block">
-        <span class="relative inline-block">Education </span>
+    <section class="about-section" aria-labelledby="toolkit-title">
+      <div class="about-section-heading"><div><p class="about-eyebrow">HOW I BUILD</p><h2 id="toolkit-title">Skills &amp; technologies</h2></div><p>From the first component to production.</p></div>
+      <div class="toolkit-grid">
+        <article v-for="(skill, index) in skills" :key="skill.title" class="toolkit-card">
+          <span class="toolkit-number">0{{ index + 1 }}</span>
+          <h3>{{ skill.title }}</h3>
+          <ul><li v-for="item in skillTags(skill.items)" :key="item">{{ item }}</li></ul>
+        </article>
       </div>
-    </div>
+    </section>
 
-    <transition name="fadeScale">
-      <Shared-Gallery
-          v-if="galleryVisible"
-          :project="getPortfolio(activeProjectID)"
-      />
-    </transition>
-
-    <div class="mt-8 flex flex-col gap-6">
-      <div
-          v-for="edu in educations"
-          class="bg-dark py-8 px-6 border border-zinc-700 rounded-md flex gap-4"
-      >
-        <svg class="w-10 h-10 text-main-orange select-none">
-          <IconEdu />
-        </svg>
-
-        <div>
-          <h3 class="text-xl text-main-orange font-medium">
-            {{ edu.college }}
-            <span class="text-white md:inline-block xs:block"
-            >({{ edu.degree }})</span
-            >
+    <section class="about-section" aria-labelledby="experience-title">
+      <div class="about-section-heading"><div><p class="about-eyebrow">THE JOURNEY SO FAR</p><h2 id="experience-title">Where I’ve worked</h2></div><p>Open a role to explore the work behind it.</p></div>
+      <div ref="experienceList" class="experience-list">
+        <article v-for="experience in experiences" :key="experience.id" class="experience-card" :class="{ 'is-open': openExperienceId === experience.id }">
+          <h3>
+            <button class="experience-toggle" type="button" :aria-expanded="openExperienceId === experience.id" :aria-controls="`experience-${experience.id}`" @click="openExperienceId = openExperienceId === experience.id ? null : experience.id">
+              <span class="experience-mark" aria-hidden="true">{{ experience.company.slice(0, 1) }}</span>
+              <span class="experience-label"><strong>{{ experience.company }}</strong><span>{{ experience.role }}</span></span>
+              <span class="experience-dates">{{ experience.startDate }} — {{ experience.endDate }}</span>
+              <span class="experience-expand" aria-hidden="true">{{ openExperienceId === experience.id ? '−' : '+' }}</span>
+            </button>
           </h3>
-
-          <p class="mt-1 text-white/60">
-            {{ edu.startYear }} - {{ edu.endYear }}
-          </p>
-
-          <ul class="flex gap-6 mt-3 text-white/80 md:flex-row xs:flex-col">
-            <li><p class="text-main-green font-bold">Courses:</p></li>
-            <li v-for="subject in edu.subjects" class="flex items-center gap-2">
-              <span
-                  class="inline-block w-2 h-2 bg-stone-400 rounded-full"
-              ></span>
-              <p>{{ subject }}</p>
-            </li>
-          </ul>
-        </div>
+          <Transition :css="false" @enter="expandExperience" @leave="collapseExperience" @enter-cancelled="cancelExperience" @leave-cancelled="cancelExperience">
+          <div v-if="openExperienceId === experience.id" :id="`experience-${experience.id}`" class="experience-panel">
+          <div class="experience-body">
+            <p class="experience-bio">{{ experience.bio }}</p>
+            <ul class="experience-tasks"><li v-for="task in experience.tasks" :key="task">{{ task }}</li></ul>
+            <template v-if="getPortfolios(null, experience.id).length">
+                <Shared-ProjectCarousel title="Projects from this role" :projects="getPortfolios(null, experience.id)" />
+            </template>
+          </div>
+          </div>
+          </Transition>
+        </article>
       </div>
-    </div>
-  </div>
-</template>
+    </section>
 
+    <section class="about-education" aria-labelledby="education-title">
+      <div><p class="about-eyebrow">FOUNDATIONS</p><h2 id="education-title">Education</h2></div>
+      <article v-for="edu in educations" :key="edu.college"><p class="education-date">{{ edu.startYear }} — {{ edu.endYear }}</p><h3>{{ edu.degree }}</h3><p>{{ edu.college }}</p><ul><li v-for="subject in edu.subjects" :key="subject">{{ subject }}</li></ul></article>
+    </section>
+    <transition name="fadeScale"><Shared-Gallery v-if="galleryVisible" :project="getPortfolio(activeProjectID)" /></transition>
+  </main>
+</template>
 <script>
 import {mapState} from "pinia";
 import useProjectsStore from "@/stores/projects";
-import gsap from "gsap";
+import { gsap } from 'gsap';
+
 
 export default {
   data() {
     return {
-      related_projects_breakpoints: {
-        320: {
-          itemsToShow: 1,
-        },
-        700:{
-          itemsToShow: 1.2,
-        },
-        900: {
-          itemsToShow: 1.4,
-        },
-        1200: {
-          itemsToShow: 2,
-        },
-        1840: {
-          itemsToShow: 3,
-        },
-      },
+      openExperienceId: null,
       skills: [
         {
           "title": "Languages",
-          "items": "HTML5, CSS3, JavaScript (ES6+), TypeScript, Node.js, JSON (Data Format)"
+          "items": "HTML5, CSS3, JavaScript (ES6+), TypeScript"
         },
         {
           "title": "Frameworks & Libraries",
           "items": "Vue.js (Nuxt, Vuetify, Pinia, Vuex, PrimeVue), React.js (Next.js, Redux), SCSS, Tailwind CSS, UnoCSS, Bootstrap, jQuery, Lodash"
+        },
+        {
+          "title": "Back-End & Data",
+          "items": "PHP, Laravel, Python, Django, Flask, FastAPI, Node.js, REST APIs, MySQL, PostgreSQL, SQLite"
         },
         {
           "title": "Testing",
@@ -270,8 +116,8 @@ export default {
           "role": "Senior Front-End Developer",
           "bio": "BitBank is a multi-language cryptocurrency exchange platform.",
           "startDate": "Feb 2025",
-          "endDate": "Current",
-          "duration": "Ongoing",
+          "endDate": "Jan 2026",
+          "duration": "1 yr",
           "tasks": [
             "Created a modular JavaScript support widget with automated builds and iframe integration, deployed across Next.js and Vue projects including BitBank3.com.",
             "Implemented multi-language support for BitBank’s cryptocurrency exchange platform.",
@@ -294,8 +140,8 @@ export default {
           "endDate": "Feb 2025",
           "duration": "9 mos",
           "tasks": [
-            "Developed major new features, including pre-market tools, loaning system, interactive prize wheel, demo trading mode, and a Telegram mini-app game — contributing to acquiring over 1M users.",
-            "Resolved critical issues with internal Trading View chart loading, corrected transaction calculation inaccuracies, and optimized responsive layouts to improve system reliability and overall user experience.",
+            "Developed major features, including pre-market tools, a lending system, an interactive prize wheel, demo trading, and a Telegram mini-app game — contributing to growth beyond 1M users.",
+            "Resolved TradingView chart-loading issues, corrected transaction calculations, and improved responsive layouts to strengthen reliability and usability.",
             "Implemented request caching and Server-Sent Events (SSE) for real-time market data, reducing server load and improving responsiveness.",
             "Built an update log system to communicate new features and improvements with each version release."
           ],
@@ -312,7 +158,7 @@ export default {
           "tasks": [
             "Delivered the company’s official website using Nuxt 3, implementing advanced animations and smooth page transitions.",
             "Engineered a reusable multi-carousel component without external dependencies, enabling flexibility across multiple application areas.",
-            "Automated the export of multiple API-driven PDFs into a single ZIP file using JS Zip.",
+            "Automated the export of multiple API-driven PDFs into a single ZIP file using JSZip.",
             "Designed a custom admin panel with PrimeVue for internal product management.",
             "Conducted workshops for the front-end team on Unit, Integration, Snapshot, and E2E testing.",
             "Improved maintainability by refactoring components, removing redundancies, and optimizing architecture."
@@ -339,7 +185,7 @@ export default {
         {
           "id": 3,
           "company": "Cactus ICT Center",
-          "role": "Web Developer & SEO Expert",
+          "role": "Full-Stack Web Developer",
           "bio": "Cactus ICT center is a web development company.",
           "startDate": "Jul 2019",
           "endDate": "Jun 2021",
@@ -359,7 +205,7 @@ export default {
           "bio": "Worked on multiple projects during freelancing & free time",
           "startDate": "Jul 2017",
           "endDate": "Present",
-          "duration": "8 yrs",
+          "duration": "9 yrs",
           "tasks": [
             "Designed Responsively. so almost 100% of users can view these websites perfectly on any device or browser.",
             "Used PHP MVC architecture for Back-end, to develop two times easier & cleaner than development with pure PHP.",
@@ -393,29 +239,96 @@ export default {
     ]),
   },
   methods: {
-    toggleDetails(index, experience) {
-      const element = this.$refs.experienceRefs[index];
-      experience.showDetails = !experience.showDetails;
-
-      if (experience.showDetails) {
-        gsap.to(element, {
-          maxHeight: element.scrollHeight + 28,
-          duration: 0.5,
-          ease: "power2.out",
-        });
-      } else {
-        gsap.to(element, {
-          maxHeight: 160,
-          duration: 0.5,
-          ease: "power2.out",
-        });
-      }
+    expandExperience(el, done) {
+      gsap.killTweensOf(el);
+      const duration = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : .4;
+      gsap.fromTo(el, { height: 0, opacity: 0, overflow: 'hidden' }, {
+        height: 'auto', opacity: 1, duration, ease: 'power2.out',
+        onComplete: () => { gsap.set(el, { clearProps: 'height,opacity,overflow' }); done(); },
+      });
     },
+    collapseExperience(el, done) {
+      gsap.killTweensOf(el);
+      const duration = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : .3;
+      gsap.to(el, { height: 0, opacity: 0, overflow: 'hidden', duration, ease: 'power2.inOut', onComplete: done });
+    },
+    cancelExperience(el) { gsap.killTweensOf(el); },
+    skillTags(items) {
+      return items.split(/,\s*(?![^()]*\))/);
+    },
+  },
+  beforeUnmount() {
+    this.$refs.experienceList?.querySelectorAll('.experience-panel').forEach(el => gsap.killTweensOf(el));
   },
 };
 </script>
 <style scoped>
-test {
-
-}
+.about-page { padding: 3rem 2rem; }
+.about-hero { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 5rem; align-items: center; }
+.about-eyebrow { color: #00dc82; font-size: .8rem; font-weight: 600; letter-spacing: .14em; margin-bottom: 14px; }
+.about-intro h1 { font-size: clamp(2.7rem, 4vw, 4.5rem); font-weight: 750; line-height: 1.12; letter-spacing: -.03em; }
+.about-intro h1 span { color: #f47a08; }
+.about-lead { margin-top: 24px; font-size: 1.3rem; line-height: 1.7; max-width: 50rem; color: #ffffffdc; }
+.about-subtext { margin-top: 14px; max-width: 50rem; color: #ffffff91; line-height: 1.8; }
+.about-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 22px; margin-top: 26px; font-weight: 600; }
+.about-actions > a { color: #f47a08; }
+.about-actions > a { padding: 13px 16px; border-radius: 8px; transition: background .2s, color .2s, transform .2s; }
+.about-actions > a:hover { background: #f47a0812; color: #ffb373; transform: translateY(-2px); }
+.about-actions > .about-primary:hover { background: #e46c04; color: white; }
+.about-actions > .about-primary { color: white; background: #c75c00; padding: 13px 20px; border-radius: 8px; }
+.about-profile { overflow: hidden; border: 1px solid #ffffff15; border-radius: 20px; background: #262626; transition: transform .3s ease, border-color .3s ease, box-shadow .3s ease; }
+.about-profile:hover { transform: translateY(-5px); border-color: #f47a0870; box-shadow: 0 18px 42px #0006; }
+.about-profile > img { display: block; width: 100%; aspect-ratio: 1 / 1; object-fit: cover; object-position: center 30%; transition: transform .45s ease, filter .3s ease; }
+.about-profile:hover > img { transform: scale(1.04); filter: saturate(1.08); }
+.about-profile > div { padding: 20px; }
+.about-profile h2 { font-size: 1.5rem; font-weight: 650; }
+.about-profile p { margin: 6px 0 14px; color: #ffffff8c; }
+.about-availability { color: #76d5ac; font-size: .8rem; line-height: 1.5; }
+.about-availability::before { content: ''; display: inline-block; width: 7px; height: 7px; margin-right: 7px; border-radius: 50%; background: #00dc82; box-shadow: 0 0 0 3px #00dc8214; }
+.about-stats { display: grid; grid-template-columns: 1fr 1fr 1.4fr; gap: 24px; margin: 40px 0 0; border-block: 1px solid #ffffff14; padding: 28px 0; }
+.about-stats > div { display: flex; flex-direction: column; gap: 8px; }
+.about-stats strong { font-size: 2rem; font-weight: 650; }
+.about-stats span { font-size: .95rem; color: #ffffff80; }
+.about-section { margin-top: 64px; }
+.about-section-heading { display: flex; justify-content: space-between; align-items: end; gap: 20px; margin-bottom: 26px; }
+.about-section h2, .about-education h2 { font-size: 2.3rem; font-weight: 650; }
+.about-section-heading > p { color: #ffffff80; }
+.toolkit-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.toolkit-card { position: relative; padding: 24px; background: #262626; border: 1px solid #ffffff12; border-radius: 14px; transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease, background .25s ease; }
+.toolkit-card:hover { transform: translateY(-4px); border-color: #f47a0860; background: #292725; box-shadow: 0 14px 32px #0005; }
+.toolkit-card h3 { font-size: 1.25rem; margin-bottom: 18px; font-weight: 600; }
+.toolkit-number { float: right; font-size: .85rem; color: #f47a0880; }
+.toolkit-card ul, .about-education ul { display: flex; flex-wrap: wrap; gap: 8px; }
+.toolkit-card li { padding: 6px 10px; border-radius: 6px; background: #ffffff05; border: 1px solid #ffffff0d; color: #ffffffad; font-size: .9rem; line-height: 1.5; }
+.toolkit-card li { transition: color .2s, border-color .2s, background .2s, transform .2s; }
+.toolkit-card li:hover { color: #ffba7c; border-color: #f47a0860; background: #f47a0810; transform: translateY(-2px); }
+.experience-list { display: grid; gap: 12px; }
+.experience-card { border: 1px solid #ffffff14; border-radius: 14px; background: #232323; overflow: hidden; }
+.experience-card.is-open { border-color: #f47a0850; }
+.experience-toggle { width: 100%; display: flex; align-items: center; gap: 20px; padding: 24px; text-align: left; }
+.experience-toggle:hover { background: #ffffff03; }
+.experience-toggle:focus-visible { outline: 2px solid #f47a08; outline-offset: -3px; }
+.experience-mark { display: grid; place-items: center; width: 48px; height: 48px; flex-shrink: 0; border-radius: 10px; color: #f47a08; background: #f47a0810; font-size: 1.6rem; font-weight: 600; }
+.experience-label { display: flex; flex-direction: column; gap: 6px; }
+.experience-label strong { font-size: 1.25rem; font-weight: 600; }
+.experience-label > span { color: #ffffff80; font-size: .95rem; }
+.experience-dates { margin-left: auto; color: #ffffff80; font-size: .9rem; }
+.experience-expand { font-size: 1.6rem; color: #f47a08; }
+.experience-body { padding: 0 24px 28px; }
+.experience-bio { color: #ffffffbc; border-top: 1px solid #ffffff10; padding-top: 20px; line-height: 1.6; }
+.experience-tasks { list-style: disc; padding-left: 20px; margin: 18px 0; color: #ffffff99; }
+.experience-tasks li { padding-left: 4px; margin-bottom: 12px; line-height: 1.75; }
+.experience-body h4 { font-weight: 600; margin: 26px 0 18px; }
+.experience-projects { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+.about-education { display: grid; grid-template-columns: 1fr 2fr; gap: 28px; margin-top: 64px; padding-top: 32px; border-top: 1px solid #ffffff14; }
+.about-education h3 { font-size: 1.35rem; font-weight: 600; margin: 8px 0; }
+.about-education article > p { color: #ffffff80; }
+.about-education ul { margin-top: 18px; color: #ffffffa3; font-size: .9rem; gap: 10px 20px; }
+@media (min-width: 550px) { .about-page { padding-inline: 3rem; } }
+@media (min-width: 1280px) { .about-page { padding-inline: 5rem; } }
+@media (max-width: 900px) { .about-hero { grid-template-columns: minmax(0, 1fr) 230px; gap: 2rem; } }
+@media (max-width: 767px) { .about-hero { grid-template-columns: minmax(0, 1fr); } .about-profile { order: -1; display: flex; align-items: center; } .about-profile > img { width: 130px; height: 160px; flex-shrink: 0; } .about-stats { gap: 16px; } .about-stats strong { font-size: 1.45rem; } .about-section-heading { align-items: start; flex-direction: column; gap: 8px; } .experience-toggle { flex-wrap: wrap; gap: 12px; padding: 18px; } .experience-label { flex: 1; } .experience-dates { margin-left: 60px; order: 2; width: 100%; } .about-education { grid-template-columns: 1fr; } }
+@media (max-width: 767px) { .about-hero-eyebrow { display: none; } }
+@media (max-width: 549px) { .toolkit-grid, .experience-projects { grid-template-columns: minmax(0, 1fr); } .about-stats { grid-template-columns: 1fr 1fr; } .about-stats > div:last-child { grid-column: 1 / -1; } .about-profile > img { width: 100px; height: 145px; } .about-profile > div { padding: 14px; } .about-profile h2 { font-size: 1.25rem; } .experience-body { padding-inline: 16px; } }
+@media (prefers-reduced-motion: reduce) { .about-profile, .about-profile > img, .toolkit-card { transition: none; } .toolkit-card:hover { transform: none; } }
 </style>

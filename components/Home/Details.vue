@@ -31,9 +31,9 @@ export default {
         Stack: "Vue, Nuxt, Tailwind",
         "Completed Projects": "+10",
         Birthdate: "1998/07/11 (26 Yr)",
-        Experience: "Over 6 years",
+        Experience: "Over 8 years",
         Interest: "Front, AI, Automation",
-        Email: "info@mehdicode.com",
+        Email: "contact@mehdispace.com",
       },
     };
   },

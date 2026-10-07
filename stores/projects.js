@@ -64,7 +64,7 @@ export default defineStore("projects", {
                     },
                 ],
                 mainMedia: 0,
-                used: ["nuxt", "pinia", "unocss", "tradingview"],
+                used: ["react", "next", "vue", "nuxt", "redux", "pinia", "tailwind", "tradingview"],
                 related_experience_id: 7
             },
             {
@@ -128,7 +128,7 @@ export default defineStore("projects", {
                     },
                 ],
                 mainMedia: 0,
-                used: ["nuxt", "pinia", "unocss", "tradingview"],
+                used: ["nuxt", "pinia", "tailwind", "tradingview"],
                 related_experience_id: 6
             },
             {
@@ -232,7 +232,7 @@ export default defineStore("projects", {
                     },
                 ],
                 mainMedia: 0,
-                used: ["nuxt", "pinia", "unocss"],
+                used: ["nuxt", "pinia", "tailwind"],
                 related_experience_id: 6,
             },
             {
@@ -310,14 +310,9 @@ export default defineStore("projects", {
                         title: "Login",
                         src: "/projects/iranecar/login.png",
                     },
-                    {
-                        type: "img",
-                        title: "Register",
-                        src: "/projects/iranecar/Register.png",
-                    },
                 ],
                 mainMedia: 0,
-                used: ["nuxt", "pinia", "unocss"],
+                used: ["nuxt", "pinia", "tailwind"],
                 related_experience_id: 4,
             },
             {
@@ -386,7 +381,7 @@ export default defineStore("projects", {
                     },
                 ],
                 mainMedia: 0,
-                used: ["nuxt", "pinia", "unocss"],
+                used: ["nuxt", "pinia", "tailwind"],
                 related_experience_id: 4,
             },
             {
@@ -433,7 +428,7 @@ export default defineStore("projects", {
                     },
                 ],
                 mainMedia: 0,
-                used: ["nuxt", "pinia", "unocss"],
+                used: ["react", "next", "vue", "nuxt", "redux", "pinia", "tailwind"],
                 related_experience_id: 1,
             },
             {
@@ -703,7 +698,7 @@ export default defineStore("projects", {
                     }
                 ],
                 mainMedia: 0,
-                used: ["nuxt", "pinia", "unocss"],
+                used: ["nuxt", "pinia", "tailwind"],
                 related_experience_id: 7
             },
             {
@@ -1108,15 +1103,12 @@ export default defineStore("projects", {
     },
     actions: {
         showGallery(projectID, activeMedia) {
-            console.log(projectID);
             this.activeProjectID = projectID;
             this.galleryVisible = true;
-            if (activeMedia) this.activeMediaIndex = activeMedia;
+            this.activeMediaIndex = activeMedia ?? 0;
         },
         hideGallery() {
             this.galleryVisible = false;
-            this.activeProjectID = this.portfolios[0].id;
-            this.activeMediaIndex = 0;
             this.resetGallery();
         },
         nextMedia() {
@@ -1131,6 +1123,12 @@ export default defineStore("projects", {
             if (this.activeMediaIndex === 0)
                 this.activeMediaIndex = this.portfolioMediaLength - 1;
             else this.activeMediaIndex--;
+            this.resetScroll();
+        },
+        selectMedia(index) {
+            if (index < 0 || index >= this.portfolioMediaLength) return;
+            this.resetGallery();
+            this.activeMediaIndex = index;
             this.resetScroll();
         },
         resetGallery() {

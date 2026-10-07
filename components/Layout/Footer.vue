@@ -15,6 +15,7 @@ export default {};
 </script>
 
 <style scoped>
+@media (max-width: 899px) { .mt-auto { padding-bottom: calc(90px + env(safe-area-inset-bottom)); } }
 .love {
   animation: pound 0.4s infinite alternate;
   -webkit-animation: pound 0.4s infinite alternate;

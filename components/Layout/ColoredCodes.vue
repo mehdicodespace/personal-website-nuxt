@@ -1,15 +1,13 @@
 <template>
-  <!-- Start Colored Codes Background -->
-  <div
-    class="fixed marqueeY px-7 absolute top-0 w-full gap-20 opacity-20 select-none flex flex-col gap-12 vertical-text items-start overflow-hidden"
-  >
-    <p
-      v-for="code in coloredCodes"
-      v-html="code"
-      class="text-gray/50 text-lg -scale-100"
-    ></p>
+  <div aria-hidden="true" class="code-background">
+    <div v-for="column in 8" :key="column" class="code-column">
+      <div class="code-track" :style="{ '--duration': `${12 + column * 1.7}s`, '--delay': `${column * -3.5}s` }">
+        <div v-for="copy in 2" :key="copy" class="code-copy">
+          <p v-for="line in 3" :key="line" v-html="coloredCodes[(column * 3 + line) % coloredCodes.length]"></p>
+        </div>
+      </div>
+    </div>
   </div>
-  <!-- End Colored Codes Background -->
 </template>
 
 <script>
@@ -24,7 +22,7 @@ export default {
           <Item><nuxt-link href="/works"> Portfolio</nuxt-link></Item>
           <Item><nuxt-link href="/contact_me"> Contact</nuxt-link></Item>
 
-          <a href="Mehdi_Rafiee-Resume.pdf" title="Download Mehdi Rafiei Resume (PDF)"> Resume </a>
+          <a href="/Mehdi-Rafiei-Resume.pdf" title="Download Mehdi Rafiei Resume (PDF)"> Resume </a>
 
           <themeswitch class="moon">Dark/Light</themeswitch>
           <langswitch class="en">en/fa</langswitch>
@@ -34,17 +32,17 @@ export default {
 
         <myname is="Mehdi Rafiei" />
 
-        <jobtitle is="Front-End Developer" />
+        <jobtitle is="Senior Front-End Developer" />
 
         <portfolios are="ready" number="8" />
 
-        <experience years="more than 6" />
+        <experience years="more than 8" />
 
         <birthdate year="1998" month="july" day="11" />
 
         <skills :list="['NUXT', 'Vue', 'React', 'Next', 'Javascript','Responsive Design', 'i18n', 'TypeScript]" />
 
-        <contactDetails :list="['info@mehdicode.com', 'linkedin.com/in/merafiee', 'github.com/mehdicodecom']" />
+        <contactDetails :list="['contact@mehdispace.com', 'linkedin.com/in/merafiee', 'github.com/mehdicodecom']" />
         `,
     };
   },
@@ -100,6 +98,12 @@ export default {
 </script>
 
 <style scoped>
-test {
-}
+.code-background { position: fixed; inset: 0; z-index: -1; pointer-events: none; user-select: none; display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); overflow: hidden; opacity: .15; }
+.code-column { min-width: 0; overflow: hidden; }
+.code-track { animation: code-drift var(--duration) linear var(--delay) infinite; will-change: transform; }
+.code-copy { height: 110vh; display: flex; flex-direction: column; justify-content: space-around; align-items: center; }
+.code-copy p { writing-mode: vertical-rl; white-space: nowrap; max-height: 32vh; overflow: hidden; font: 13px/1.5 Consolas, monospace; color: #91a3ad; }
+@keyframes code-drift { from { transform: translateY(-50%); } to { transform: translateY(0); } }
+@media (max-width: 767px) { .code-background { grid-template-columns: repeat(4, minmax(0, 1fr)); opacity: .11; } .code-column:nth-child(n + 5) { display: none; } .code-copy p { font-size: 11px; } }
+@media (prefers-reduced-motion: reduce) { .code-track { animation: none; } }
 </style>

@@ -1,32 +1,21 @@
 <template>
-  <Title>Mehdi Rafiei | Contact Me | Front-end Developer</Title>
+  <Title>Contact Mehdi Rafiei | Senior Front-End Developer</Title>
+  <Meta name="description" content="Contact Mehdi Rafiei to discuss front-end development, Vue, Nuxt or React projects, collaboration and career opportunities." />
+  <Meta property="og:title" content="Contact Mehdi Rafiei | Senior Front-End Developer" />
+  <Meta property="og:description" content="Get in touch with Mehdi Rafiei about front-end development projects and collaboration opportunities." />
 
   <div
-    class="relative flex xl:(pl-24 pr-22) lg:(pl-17 pr-14 w-11/12 mx-auto) md:(mt-24 flex-row) sm:(mt-20 pl-16 pr-14) xs:(flex-col px-8 mt-16 w-full)"
+    class="page-content-enter relative flex w-full px-8 sm:px-12 xl:px-20 mt-16 sm:mt-20 md:mt-24 md:flex-row flex-col"
   >
     <div
-      class="relative px-8 py-10 bg-black/60 lg:w-4/12 md:w-5/12 xs:(w-full py-8) rounded-lg"
+      class="contact-card relative px-8 py-10 bg-black/60 lg:w-4/12 md:w-5/12 xs:(w-full py-8) rounded-lg"
     >
-      <div class="loading textLoading inline-block">
-        <h2 class="text-3xl font-bold">Let's Get In Touch!</h2>
-      </div>
+      <span class="contact-orbit contact-orbit-start" aria-hidden="true"><span></span></span>
+      <span class="contact-orbit contact-orbit-end" aria-hidden="true"><span></span></span>
+      <h2 class="relative z-10 text-3xl font-bold">Let's Get In Touch!</h2>
 
-      <span
-        class="absolute inline-block sm:(-top-10 -left-10 w-30 h-30) xs:(-top-8 -left-4 w-22 h-22) bg-transparent border border-main-orange/70 rounded-full"
-      >
-        <span
-          class="absolute top-1 left-1 inline-block sm:(w-26 h-26) xs:(w-18 h-18) bg-transparent border border-main-orange/70 rounded-full"
-        ></span>
-      </span>
-      <span
-        class="absolute sm:(-bottom-10 -right-10 w-30 h-30) xs:(-bottom-8 -right-6 w-22 h-22) bg-transparent border border-main-orange/70 rounded-full"
-      >
-        <span
-          class="absolute bottom-1 right-1 sm:(w-26 h-26) xs:(w-18 h-18) inline-block w-26 h-26 bg-transparent border border-main-orange/70 rounded-full"
-        ></span>
-      </span>
       <div
-        class="flex md:(flex-col mt-12 mb-16 flex-nowrap) xs:(flex-row mt-6 mb-6 flex-wrap) gap-10 mb-16"
+        class="relative z-10 flex md:(flex-col mt-12 mb-16 flex-nowrap) xs:(flex-row mt-6 mb-6 flex-wrap) gap-10 mb-16"
       >
         <div class="flex items-center gap-4" v-for="contact in contacts">
           <span
@@ -36,13 +25,11 @@
               <component :is="`Icon${contact.type.charAt(0).toUpperCase() + contact.type.slice(1)}`" />
             </svg>
           </span>
-          <div class="loading textLoading inline-block">
-            <p>{{ contact.value }}</p>
-          </div>
+          <p>{{ contact.value }}</p>
         </div>
       </div>
 
-      <General-SocialNetworks class="mb-4" />
+      <General-SocialNetworks class="relative z-10 mb-4" />
     </div>
 
     <form
@@ -219,7 +206,7 @@ export default {
   data() {
     return {
       contacts: [
-        { type: "mail", value: "Career@mehdicode.com" },
+        { type: "mail", value: "contact@mehdispace.com" },
         // {
         //   type: "phone",
         //   value: "+989300432875",
@@ -267,7 +254,7 @@ export default {
         formData.append("message", this.sender.message);
 
         try {
-          const response = await fetch("https://mehdicode.com/mail/", {
+          const response = await fetch("https://mehdispace.com/mail/", {
             method: "POST",
             body: formData,
           });
@@ -343,4 +330,10 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.contact-card { overflow: hidden; isolation: isolate; }
+.contact-orbit { position: absolute; z-index: 0; display: block; width: 112px; height: 112px; border: 1px solid #f47a0870; border-radius: 50%; opacity: .55; pointer-events: none; }
+.contact-orbit > span { position: absolute; inset: 8px; border: 1px solid #f47a0860; border-radius: 50%; }
+.contact-orbit-start { top: -58px; left: -58px; }
+.contact-orbit-end { right: -58px; bottom: -58px; }
+</style>

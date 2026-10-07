@@ -5,7 +5,7 @@
         <a
           :href="value.link"
           target="_blank"
-          class="group/social flex rounded-full trans3ms overflow-hidden bg-dark-300 w-12 h-12 items-center shadow-md hover:(w-34)"
+          class="group flex rounded-full trans3ms overflow-hidden bg-dark-300 w-12 h-12 items-center shadow-md hover:(w-34)"
         >
           <span
             :class="`min-w-12 h-12 relative flex justify-center items-center rounded-full trans3ms ${value.groupHover}`"
@@ -29,15 +29,15 @@ export default {
       socialNetworks: {
         Github: {
           link: "https://github.com/mehdicodecom",
-          groupHover: "group-hover/social:(bg-socials-github text-white)",
+          groupHover: "group-hover:(bg-socials-github text-white)",
         },
         Linkedin: {
           link: "https://www.linkedin.com/in/merafiee/",
-          groupHover: "group-hover/social:(bg-socials-linkedin text-white)",
+          groupHover: "group-hover:(bg-socials-linkedin text-white)",
         },
         Telegram: {
           link: "https://t.me/merafiei",
-          groupHover: "group-hover/social:(bg-socials-telegram text-white)",
+          groupHover: "group-hover:(bg-socials-telegram text-white)",
         },
       },
     };

@@ -1,7 +1,10 @@
 <template>
-  <Title>Mehdi Rafiei | Portfolios | Front-end Developer</Title>
+  <Title>Front-End Projects &amp; Portfolio | Mehdi Rafiei</Title>
+  <Meta name="description" content="Explore Mehdi Rafiei's front-end projects across crypto trading, fintech, e-commerce and more, built with Vue, Nuxt, React and modern web tools." />
+  <Meta property="og:title" content="Front-End Projects &amp; Portfolio | Mehdi Rafiei" />
+  <Meta property="og:description" content="Browse Mehdi Rafiei's front-end projects in crypto trading, fintech, e-commerce and more." />
 
-  <div>
+  <div class="page-content-enter">
     <Shared-Projects
       :projects="paginatedProjects"
       :portfolios-page="true"
@@ -11,9 +14,9 @@
       :total-projects-count="allProjects.length"
       @category-selected="onCategorySelected"
     />
-    
+
     <!-- Pagination -->
-    <div class="xl:(ml-42 mr-40 px-22) lg:(ml-30 mr-30 px-18) md:(px-14 mt-8) sm:(px-8 mx-12 mt-8) xs:(px-6 mx-8 mt-8)">
+    <div class="mt-8 px-8 sm:px-12 xl:px-20">
       <Shared-Pagination
         :current-page="currentPage"
         :total-items="filteredProjects.length"
@@ -21,14 +24,16 @@
         @page-changed="onPageChanged"
       />
     </div>
-    
+
+  </div>
+  <Teleport to="body">
     <transition name="fadeScale">
       <Shared-Gallery
         v-if="galleryVisible"
         :project="getPortfolio(activeProjectID)"
       />
     </transition>
-  </div>
+  </Teleport>
 </template>
 
 <script>
@@ -98,8 +103,6 @@ export default {
       this.selectedCategory = category;
       this.currentPage = 1; // Reset to first page when category changes
       this.updateQuery();
-      this.scrollToTop();
-      this.preventOverflowDuringTransition();
     },
     onPageChanged(page) {
       this.currentPage = page;
@@ -112,15 +115,6 @@ export default {
         behavior: 'smooth'
       });
     },
-    preventOverflowDuringTransition() {
-      // Add overflow hidden to body during transition
-      document.body.style.overflowX = 'hidden';
-      
-      // Remove it after animation completes
-      setTimeout(() => {
-        document.body.style.overflowX = '';
-      }, 500); // Slightly longer than animation duration
-    },
     updateQuery() {
       const query = {};
       if (this.selectedCategory !== 'all') {
@@ -129,14 +123,12 @@ export default {
       if (this.currentPage > 1) {
         query.page = this.currentPage.toString();
       }
-      
-      this.$router.replace({ 
-        path: this.$route.path, 
-        query: Object.keys(query).length ? query : {} 
+
+      this.$router.replace({
+        path: this.$route.path,
+        query: Object.keys(query).length ? query : {}
       });
     }
   }
 };
 </script>
-
-<style scoped></style>
