@@ -1,8 +1,8 @@
 <template>
   <Title>About Mehdi Rafiei | Senior Front-End Developer</Title>
-  <Meta name="description" content="Meet Mehdi Rafiei, a senior front-end developer with 8+ years building Vue, Nuxt, React and Next.js products, with hands-on back-end and API experience." />
+  <Meta name="description" content="Senior front-end developer with 8+ years building production products, plus hands-on experience with Nuxt.js and Next.js API routes, Node.js, Express, and PHP MVC." />
   <Meta property="og:title" content="About Mehdi Rafiei | Senior Front-End Developer" />
-  <Meta property="og:description" content="Front-end engineering is Mehdi Rafiei’s specialty; his experience also spans back-end features, APIs, databases and production deployment." />
+  <Meta property="og:description" content="Front-end engineering is Mehdi Rafiei’s specialty, with additional experience building API routes, Node.js/Express features, and PHP MVC applications." />
 
   <main class="about-page page-content-enter">
     <section class="about-hero" aria-labelledby="about-title">
@@ -10,7 +10,7 @@
         <p class="about-eyebrow about-hero-eyebrow">THE PERSON BEHIND THE CODE</p>
         <h1 id="about-title">Building interfaces<br />people <span>rely on.</span></h1>
         <p class="about-lead">I’m Mehdi Rafiei, a senior front-end developer with 8+ years building production web products across fintech, crypto, e-commerce, and real estate. I specialize in Vue, Nuxt, React, and Next.js, turning complex requirements into clear, responsive interfaces.</p>
-        <p class="about-subtext">Front-end engineering is my strongest area, and I’ve also built back-end features, REST APIs, and database-backed services, then taken products through deployment. That end-to-end experience helps me make practical decisions across the stack while keeping the user experience at the center.</p>
+        <p class="about-subtext">I’ve also taken applications from API and database integration through deployment. That end-to-end perspective helps me build front ends that fit the product’s architecture and the way teams ship it.</p>
         <div class="about-actions">
           <NuxtLink to="/contact-me" class="about-primary">Let’s work together <span aria-hidden="true">↗</span></NuxtLink>
           <NuxtLink to="/portfolios">Explore my projects →</NuxtLink>
@@ -31,12 +31,16 @@
     <section class="about-section" aria-labelledby="toolkit-title">
       <div class="about-section-heading"><div><p class="about-eyebrow">HOW I BUILD</p><h2 id="toolkit-title">Skills &amp; technologies</h2></div><p>From the first component to production.</p></div>
       <div class="toolkit-grid">
-        <article v-for="(skill, index) in skills" :key="skill.title" class="toolkit-card">
+        <article v-for="(skill, index) in skills" :key="skill.title" class="toolkit-card" :class="{ 'toolkit-card-wide': skill.wide }">
           <span class="toolkit-number">0{{ index + 1 }}</span>
           <h3>{{ skill.title }}</h3>
           <ul><li v-for="item in skillTags(skill.items)" :key="item">{{ item }}</li></ul>
         </article>
       </div>
+      <aside class="backend-experience" aria-labelledby="backend-experience-title">
+        <h3 id="backend-experience-title">Additional back-end experience</h3>
+        <p>Nuxt.js and Next.js API routes, Node.js, Express, REST APIs, PHP MVC, and SQL databases.</p>
+      </aside>
     </section>
 
     <section class="about-section" aria-labelledby="experience-title">
@@ -93,20 +97,17 @@ export default {
           "items": "Vue.js (Nuxt, Vuetify, Pinia, Vuex, PrimeVue), React.js (Next.js, Redux), SCSS, Tailwind CSS, UnoCSS, Bootstrap, jQuery, Lodash"
         },
         {
-          "title": "Back-End & Data",
-          "items": "PHP, Laravel, Python, Django, Flask, FastAPI, Node.js, REST APIs, MySQL, PostgreSQL, SQLite"
-        },
-        {
           "title": "Testing",
           "items": "Vitest, Cypress, Jest"
         },
         {
-          "title": "Concepts",
-          "items": "Responsive Web Design, RESTful API Integration, UI/UX Design, SEO Optimization, Core Web Vitals, Cross-Browser Compatibility, Progressive Web Apps (PWA), Single Page Applications (SPA), Internationalization (i18n), WebSockets, Server-Sent Events (SSE), Front-End Architecture, Performance Optimization"
-        },
-        {
           "title": "Tools",
           "items": "Git, GitHub, GitLab, Jira, Figma, Emmet, ESLint, Prettier, NPM, Yarn, Docker, PM2"
+        },
+        {
+          "title": "Engineering & Performance",
+          "items": "Responsive Web Design, RESTful API Integration, UI/UX Implementation, Technical SEO, Core Web Vitals, Cross-Browser Compatibility, Progressive Web Apps (PWA), Internationalization (i18n), WebSockets, Server-Sent Events (SSE), Front-End Architecture, Performance Optimization",
+          "wide": true
         }
       ],
       experiences: [
@@ -207,9 +208,9 @@ export default {
           "endDate": "Present",
           "duration": "9 yrs",
           "tasks": [
-            "Designed Responsively. so almost 100% of users can view these websites perfectly on any device or browser.",
-            "Used PHP MVC architecture for Back-end, to develop two times easier & cleaner than development with pure PHP.",
-            "Developed an advanced online ordering system for the Namichap, So users could customize their orders with multiple options."
+            "Built responsive layouts for websites and web applications across desktop and mobile devices.",
+            "Built PHP back ends using MVC architecture to organize application logic and improve maintainability.",
+            "Developed Namichap’s online ordering system with configurable product and order options."
           ],
           "showDetails": false
         }
@@ -294,6 +295,10 @@ export default {
 .about-section h2, .about-education h2 { font-size: 2.3rem; font-weight: 650; }
 .about-section-heading > p { color: #ffffff80; }
 .toolkit-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.toolkit-card-wide { grid-column: 1 / -1; }
+.backend-experience { margin-top: 20px; padding-top: 20px; border-top: 1px solid #ffffff14; }
+.backend-experience h3 { font-size: 1rem; font-weight: 600; color: #ffffffc4; }
+.backend-experience p { margin-top: 8px; color: #ffffff99; line-height: 1.7; }
 .toolkit-card { position: relative; padding: 24px; background: #262626; border: 1px solid #ffffff12; border-radius: 14px; transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease, background .25s ease; }
 .toolkit-card:hover { transform: translateY(-4px); border-color: #f47a0860; background: #292725; box-shadow: 0 14px 32px #0005; }
 .toolkit-card h3 { font-size: 1.25rem; margin-bottom: 18px; font-weight: 600; }

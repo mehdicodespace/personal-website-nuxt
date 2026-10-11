@@ -7,8 +7,8 @@
       <div><General-SocialNetworks /></div>
     </div>
     <div class="intro-summary">
-      <p class="intro-experience"><strong>8+</strong> years building web products</p>
-      <p class="intro-description">I specialize in front-end engineering and can take web products beyond the interface—from back-end features and APIs through deployment.</p>
+      <p class="intro-experience"><strong>8+</strong> years building web applications</p>
+      <p class="intro-description">I make complex web products easier to use by building responsive, high-performance interfaces that help people get things done.</p>
       <ul class="intro-skills" aria-label="Core technologies">
         <li v-for="skill in ['Vue', 'Nuxt', 'React', 'Next.js', 'TypeScript']" :key="skill">{{ skill }}</li>
       </ul>
