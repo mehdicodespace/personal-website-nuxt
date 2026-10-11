@@ -18,8 +18,8 @@
 export default {
   data() {
     return {
-      resumeLink: "/Mehdi-Rafiei-Resume.pdf",
-      download: "Mehdi Rafiei Resume.pdf",
+      resumeLink: "/Mehdi-Rafiei-Resume-Senior-Front-End-Developer.pdf",
+      download: "Mehdi-Rafiei-Resume-Senior-Front-End-Developer.pdf",
     };
   },
 };

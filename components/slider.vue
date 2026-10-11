@@ -12,7 +12,7 @@
       :grab-cursor="true"
       :centered-slides="true"
       :slides-per-view="1.4"
-      :breakpoints="{ 650: { slidesPerView: 2 }, 1000: { slidesPerView: 3 } }"
+      :breakpoints="{ 650: { slidesPerView: 2 }, 1000: { slidesPerView: 3 }, 1600: { slidesPerView: 3.8 }, 2200: { slidesPerView: 5 } }"
       :loop="items.length >= 6"
       :initial-slide="Math.min(2, items.length - 1)"
       :coverflow-effect="{ rotate: 28, stretch: 0, depth: 130, modifier: 1, slideShadows: false }"
@@ -82,7 +82,7 @@ onBeforeUnmount(() => observer?.disconnect());
 </script>
 
 <style scoped>
-.article-carousel { --card-height: clamp(230px, 28vw, 380px); position: relative; width: 100%; min-width: 0; max-width: 1400px; min-height: calc(var(--card-height) + 56px); margin: 0 auto; }
+.article-carousel { --card-height: clamp(230px, 28vw, 380px); position: relative; width: 100%; min-width: 0; min-height: calc(var(--card-height) + 56px); margin: 0 auto; }
 .article-swiper { width: 100%; min-width: 0; padding: 20px 0 36px; opacity: 1; transform: translateY(0); transition: opacity .7s ease, transform .7s ease; pointer-events: none; }
 .article-swiper.is-loading { opacity: 0; transform: translateY(16px); }
 .article-swiper :deep(.swiper-slide) { height: var(--card-height); overflow: hidden; border: 1px solid #ffffff12; border-radius: 14px; transition: border-color .3s, box-shadow .3s; }

@@ -20,7 +20,7 @@
           View All Posts →
         </NuxtLink>
       </div>
-      <div class="home-carousel mt-4 flex w-full overflow-hidden">
+      <div class="home-carousel mt-4 w-full overflow-hidden px-0 xl:px-20">
         <Slider :items="getPosts(6)" />
       </div>
     </section>

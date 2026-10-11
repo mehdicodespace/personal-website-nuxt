@@ -22,7 +22,7 @@ export default {
           <Item><nuxt-link href="/works"> Portfolio</nuxt-link></Item>
           <Item><nuxt-link href="/contact_me"> Contact</nuxt-link></Item>
 
-          <a href="/Mehdi-Rafiei-Resume.pdf" title="Download Mehdi Rafiei Resume (PDF)"> Resume </a>
+          <a href="/Mehdi-Rafiei-Resume-Senior-Front-End-Developer.pdf" title="Download Mehdi Rafiei Resume (PDF)"> Resume </a>
 
           <themeswitch class="moon">Dark/Light</themeswitch>
           <langswitch class="en">en/fa</langswitch>

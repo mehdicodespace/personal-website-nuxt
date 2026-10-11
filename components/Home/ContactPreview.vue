@@ -7,7 +7,7 @@
           <p class="text-white/70 text-lg">Ready to start your next project? Let's discuss how I can help bring your vision to life.</p>
         </div>
 
-        <div class="grid md:grid-cols-3 gap-6 mb-8">
+        <div class="mx-auto mb-8 grid max-w-4xl grid-cols-1 gap-5 sm:grid-cols-3 sm:gap-4">
           <div class="text-center">
             <div class="w-12 h-12 bg-main-orange/20 rounded-full flex items-center justify-center mx-auto mb-3"><svg class="w-6 h-6 text-main-orange"><IconMail /></svg></div>
             <p class="text-white font-medium">Email Me</p>
@@ -29,7 +29,7 @@
           <NuxtLink to="/contact-me" class="inline-flex items-center justify-center gap-2 px-8 py-4 bg-main-orange text-white rounded-lg hover:bg-main-orange/80 transition-colors duration-200 font-semibold">
             <span>Get In Touch</span><svg class="w-5 h-5"><IconArrow /></svg>
           </NuxtLink>
-          <a href="/Mehdi-Rafiei-Resume.pdf" download="Mehdi Rafiei Resume.pdf" class="inline-flex items-center justify-center gap-2 px-8 py-4 border border-main-orange text-main-orange rounded-lg hover:bg-main-orange hover:text-white transition-colors duration-200 font-semibold">
+          <a href="/Mehdi-Rafiei-Resume-Senior-Front-End-Developer.pdf" download="Mehdi-Rafiei-Resume-Senior-Front-End-Developer.pdf" class="inline-flex items-center justify-center gap-2 px-8 py-4 border border-main-orange text-main-orange rounded-lg hover:bg-main-orange hover:text-white transition-colors duration-200 font-semibold">
             <svg class="w-5 h-5"><IconPdf /></svg><span>Download Resume</span>
           </a>
         </div>
