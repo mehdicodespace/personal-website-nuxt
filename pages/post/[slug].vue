@@ -38,6 +38,14 @@
                <div
                  class="flex-1 min-w-0 bg-dark/70 rounded-lg p-4 sm:p-6 md:p-8 lg:px-12 border border-neutral-700 shadow-lg"
                >
+                 <p
+                   role="note"
+                   class="mb-6 rounded-lg border border-main-orange/25 bg-main-orange/10 px-4 py-3 text-sm leading-relaxed text-white/75"
+                 >
+                   <span class="font-semibold text-main-orange">Demo content:</span>
+                   This sample article is included to showcase the blog layout and reading experience; it is not a published post.
+                 </p>
+
                  <!-- Enhanced Title and Image Section -->
                  <div class="relative mb-6 lg:mb-8">
                    <!-- Hero Image Container -->
