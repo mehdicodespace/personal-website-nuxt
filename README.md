@@ -1,63 +1,40 @@
-# Nuxt 3 Minimal Starter
+# MehdiSpace — Personal Portfolio
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+The source code for [MehdiSpace](https://mehdispace.com), my personal website and portfolio. It brings together selected client work, project galleries, front-end articles, and information about my experience.
 
-## Setup
+## Homepage preview
 
-Make sure to install the dependencies:
+![Desktop preview of the MehdiSpace homepage](public/homepage-preview.jpg)
+
+## What’s included
+
+- Responsive homepage and project portfolio with image galleries
+- Project detail pages with media previews and technology summaries
+- Blog with article pages and syntax-highlighted code samples
+- About, contact, and résumé sections
+- Page transitions, carousels, and interactive UI components
+
+## Tech stack
+
+- **Framework:** Nuxt 3 and Vue 3
+- **Styling:** UnoCSS with utility-first classes and custom CSS
+- **State:** Pinia
+- **Animation:** GSAP
+- **Carousels:** Swiper and Vue 3 Carousel
+- **Code highlighting:** highlight.js
+- **Icons:** nuxt-svgo
+
+## Run locally
+
+Use Node.js and npm, then install the dependencies and start the Nuxt development server:
 
 ```bash
-# npm
 npm install
-
-# pnpm
-pnpm install
-
-# yarn
-yarn install
-```
-
-## Development Server
-
-Start the development server on `http://localhost:3000`:
-
-```bash
-# npm
 npm run dev
-
-# pnpm
-pnpm run dev
-
-# yarn
-yarn dev
 ```
 
-## Production
-
-Build the application for production:
+To create a production build:
 
 ```bash
-# npm
 npm run build
-
-# pnpm
-pnpm run build
-
-# yarn
-yarn build
 ```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm run preview
-
-# yarn
-yarn preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
