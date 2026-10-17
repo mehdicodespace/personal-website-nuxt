@@ -42,7 +42,7 @@ export default {
 
         <skills :list="['NUXT', 'Vue', 'React', 'Next', 'Javascript','Responsive Design', 'i18n', 'TypeScript]" />
 
-        <contactDetails :list="['contact@mehdispace.com', 'linkedin.com/in/merafiee', 'github.com/mehdicodecom']" />
+        <contactDetails :list="['contact@mehdispace.com', 'linkedin.com/in/merafiee', 'github.com/mehdicodespace']" />
         `,
     };
   },

@@ -31,7 +31,7 @@ export default {
       socialNetworks: {
         Github: {
           label: "GitHub profile (opens in a new tab)",
-          link: "https://github.com/mehdicodecom",
+          link: "https://github.com/mehdicodespace",
           groupHover: "group-hover:(bg-socials-github text-white)",
         },
         Linkedin: {
@@ -41,7 +41,7 @@ export default {
         },
         Telegram: {
           label: "Telegram profile (opens in a new tab)",
-          link: "https://t.me/merafiei",
+          link: "https://t.me/MehdiCodeSpace",
           groupHover: "group-hover:(bg-socials-telegram text-white)",
         },
         WhatsApp: {
