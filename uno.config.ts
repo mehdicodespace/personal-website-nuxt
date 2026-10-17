@@ -11,6 +11,7 @@ export default defineConfig({
     "bg-socials-linkedin",
     "bg-socials-github",
     "bg-socials-telegram",
+    "bg-socials-whatsapp",
   ],
   transformers: [transformerVariantGroup() as any],
   theme: {
@@ -27,6 +28,7 @@ export default defineConfig({
         github: "#4f4e4e",
         linkedin: "#0A66C2",
         telegram: "#3390EC",
+        whatsapp: "#25D366",
       },
     },
 

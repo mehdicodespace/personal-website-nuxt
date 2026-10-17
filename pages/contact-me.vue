@@ -96,7 +96,7 @@
         </div>
         <div class="relative flex-1">
           <input
-            title="Enter with country code (+989300432875)"
+            title="Enter with country code (for example, +905355092605)"
             type="tel"
             class="pl-12 pr-4 bg-dark-700 trans3ms w-full h-12 border border-dark rounded-lg focus:border-main-orange hover:border-main-orange"
             v-model="sender.tel"
@@ -293,7 +293,7 @@ export default {
         this.state = "error";
         this.title = "Form Validation Error!!";
         this.message =
-          "Check that you have filled in the inputs correctly. Phone number must include the country code (e.g., +989300432875).";
+          "Check that you have filled in the inputs correctly. Phone number must include the country code (e.g., +905355092605).";
       }
     },
     validateForm() {
