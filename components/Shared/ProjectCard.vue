@@ -14,6 +14,9 @@
       </div>
     </div>
     <div class="project-card-copy">
+      <h3 data-skeleton><NuxtLink :to="`/project/${project.name}`">{{ project.name }}</NuxtLink></h3>
+      <p class="project-card-title" data-skeleton>{{ project.title }}</p>
+      <p class="project-card-description" data-skeleton>{{ project.description }}</p>
       <div class="project-card-meta" data-skeleton>
         <span v-if="project.projectKind === 'independent'" class="project-kind">Independent</span>
         <span v-if="project.category === 'GitHub Projects'" class="project-card-category github-project-category">
@@ -22,9 +25,6 @@
         </span>
         <span v-else class="project-card-category">{{ project.category }}</span>
       </div>
-      <h3 data-skeleton><NuxtLink :to="`/project/${project.name}`">{{ project.name }}</NuxtLink></h3>
-      <p class="project-card-title" data-skeleton>{{ project.title }}</p>
-      <p class="project-card-description" data-skeleton>{{ project.description }}</p>
       <div class="project-card-footer" data-skeleton>
         <div class="project-card-stack" aria-label="Technologies">
           <img v-for="skill in project.used.slice(0, 5)" :key="skill" :src="`/imgs/skills/${skill}.svg`" :alt="skill" :title="skill" width="20" height="20" loading="lazy" />
@@ -71,7 +71,7 @@ function openProject(event) {
 .project-card-screen :deep(.comp) { height: 9px; }
 .project-card-screen :deep(.notch) { width: 30%; height: 7px; }
 .project-card-copy { padding: 20px; }
-.project-card-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; min-height: 20px; margin-bottom: 9px; }
+.project-card-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; min-height: 20px; margin-top: 12px; }
 .project-card-category { display: inline-flex; align-items: center; padding: 3px 8px; border: 1px solid #ffffff1c; border-radius: 999px; background: #ffffff08; color: #d0d0d0; font-size: .72rem; font-weight: 550; line-height: 1.25; }
 .github-project-category { display: inline-flex; align-items: center; gap: 5px; padding: 3px 8px; border: 1px solid #ffffff17; border-radius: 999px; background: #161718; color: #d5d7da; font-size: .72rem; font-weight: 550; }
 .github-project-category svg { width: 13px; height: 13px; color: #e6e8eb; }
