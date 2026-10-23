@@ -17,7 +17,7 @@
 @media (min-width: 550px) { .site-header { padding-inline: 3rem; } }
 @media (min-width: 1280px) { .site-header { padding-inline: 5rem; } }
 @media (min-width: 900px) {
-  .header-shell { padding: 7px 10px 7px 14px; }
+  .header-shell { padding: 7px 10px 7px 14px; border: 1px solid #ffffff12; border-radius: 18px; background: #15151570; box-shadow: 0 12px 34px #00000018, inset 0 1px #ffffff08; backdrop-filter: blur(12px) saturate(120%); -webkit-backdrop-filter: blur(12px) saturate(120%); }
 }
 @media (min-width: 900px) and (max-width: 1100px) { .header-shell { gap: 1.1rem; } .header-brand :deep(img) { width: 58px; } .header-resume :deep(a) { width: 126px; } }
 @media (max-width: 899px) { .header-shell { gap: 1rem; } .header-brand :deep(img) { width: 58px; } .header-resume :deep(a) { width: 128px; height: 44px; } }
