@@ -196,12 +196,11 @@ export default {
 </script>
 
 <style scoped>
-.project-page { --project-page-gutter: 16px; }
-.project-back-link { position: absolute; top: -56px; left: var(--project-page-gutter); display: inline-flex; align-items: center; gap: 11px; min-height: 48px; color: #ffad62; font-size: 1.1rem; font-weight: 650; line-height: 1; transition: color .2s, transform .2s; }
+.project-back-link { position: absolute; top: -50px; left: 0; display: inline-flex; align-items: center; gap: 11px; min-height: 36px; color: #ffad62; font-size: 1.1rem; font-weight: 650; line-height: 1; transition: color .2s, transform .2s; }
 .project-back-link:hover { transform: translateX(-2px); color: #ffc084; }
-.project-back-icon { display: grid; width: 46px; height: 46px; place-items: center; border: 1px solid #ffffff1d; border-radius: 50%; background: #ffffff08; transition: border-color .2s, background .2s; }
+.project-back-icon { display: grid; width: 36px; height: 36px; place-items: center; border: 1px solid #ffffff1d; border-radius: 50%; background: #ffffff08; transition: border-color .2s, background .2s; }
 .project-back-link:hover .project-back-icon { border-color: #f47a0866; background: #f47a0816; }
-.project-back-icon :deep(svg) { width: 24px; height: 24px; }
+.project-back-icon :deep(svg) { width: 28px; height: 28px; }
 .project-overview { width: 100%; margin: 8px 0 4px; padding: 20px 22px; border: 1px solid #ffffff16; border-radius: 14px; background: linear-gradient(110deg, #ffffff05, #f47a0808); text-align: left; }
 .project-overview-heading { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 18px; }
 .project-title { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 11px; margin: 0; font-size: clamp(1.5rem, 2.2vw, 2rem); font-weight: 700; line-height: 1.2; }
@@ -223,9 +222,8 @@ export default {
 .project-skills { display: flex; flex-wrap: wrap; align-items: center; gap: 11px; margin: 0; padding: 0; list-style: none; }
 .project-skills img { display: block; width: 25px; height: 25px; object-fit: contain; }
 @media (max-width: 640px) {
-  .project-back-link { top: -52px; min-height: 42px; gap: 9px; font-size: 1rem; }
-  .project-back-icon { width: 42px; height: 42px; }
-  .project-back-icon :deep(svg) { width: 22px; height: 22px; }
+  .project-back-link { top: -48px; min-height: 36px; gap: 9px; font-size: 1rem; }
+  .project-back-icon :deep(svg) { width: 26px; height: 26px; }
   .project-overview { padding: 16px; }
   .project-overview-heading { align-items: flex-start; }
   .project-title { font-size: 1.45rem; }
@@ -233,9 +231,6 @@ export default {
   .project-overview-footer { align-items: flex-start; }
   .project-skills { gap: 10px; }
 }
-@media (min-width: 641px) { .project-page { --project-page-gutter: 32px; } }
-@media (min-width: 1024px) { .project-page { --project-page-gutter: 48px; } }
-@media (min-width: 1280px) { .project-page { --project-page-gutter: 64px; } }
 @media (prefers-reduced-motion: reduce) { .project-links a { transition: none; } }
 .gallery {
   position: absolute;
