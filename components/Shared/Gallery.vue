@@ -206,7 +206,7 @@ export default {
 .gallery-media-frame { display: grid; width: 100%; min-width: 0; grid-template-columns: clamp(38px, 4vw, 60px) minmax(0, 1fr) clamp(38px, 4vw, 60px); align-items: center; justify-items: center; gap: clamp(8px, 2vw, 28px); }
 .gallery-screen-wrapper { width: 100%; min-width: 0; }
 .gallery-screen-wrapper--mobile { width: min(100%, 400px); }
-.gallery-screen-wrapper--desktop { width: min(100%, 1120px); }
+.gallery-screen-wrapper--desktop { width: min(100%, 960px); }
 .gallery-media-enter-active, .gallery-media-leave-active { transition: opacity .34s ease, transform .42s cubic-bezier(.2, .8, .2, 1); will-change: opacity, transform; }
 .gallery-media-enter-from { opacity: 0; transform: translate3d(0, 16px, 0) scale(.985); }
 .gallery-media-leave-to { opacity: 0; transform: translate3d(0, -8px, 0) scale(.99); }
