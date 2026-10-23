@@ -35,12 +35,11 @@ const isActive = menu => route.path === menu.path || (menu.detail && route.path.
   .site-nav ul { gap: 2px; }
   .site-nav a { position: relative; gap: 8px; padding: 10px 12px; border-radius: 9px; font-size: 1rem; }
   .site-nav a.active { color: #ffab60; background: #f47a0812; box-shadow: inset 0 0 0 1px #f47a081a; }
-  .site-nav a.active::after { position: absolute; right: 16px; bottom: 4px; left: 16px; height: 2px; border-radius: 2px; background: #f47a08; content: ''; }
   .site-nav a:hover, .site-nav a:focus-visible { background: #f47a080c; }
 }
 @media (min-width: 900px) and (max-width: 1100px) { .site-nav ul { gap: 8px; } .site-nav a { padding: 10px 8px; } .site-nav svg { display: none; } }
 @media (max-width: 899px) {
-  .site-nav { position: fixed; z-index: 40; inset: auto 12px calc(10px + env(safe-area-inset-bottom)); padding: 6px; border: 1px solid #ffffff17; border-radius: 18px; background: #202020eF; box-shadow: 0 8px 28px #0008, inset 0 1px #ffffff08; backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); }
+  .site-nav { position: fixed; z-index: 40; inset: auto 12px calc(10px + env(safe-area-inset-bottom)); padding: 6px; border: 1px solid #ffffff17; border-radius: 18px; background: #202020c9; box-shadow: 0 8px 28px #0008, inset 0 1px #ffffff08; backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
   .site-nav ul { width: 100%; gap: 3px; }
   .site-nav li { flex: 1; min-width: 0; }
   .site-nav a { position: relative; width: 100%; flex-direction: column; justify-content: center; gap: 3px; min-height: 58px; padding: 4px 1px; border-radius: 13px; font-size: 11px; }
