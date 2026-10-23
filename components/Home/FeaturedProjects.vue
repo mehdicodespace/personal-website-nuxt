@@ -29,7 +29,7 @@
 defineProps({ projects: { type: Array, required: true } });
 </script>
 <style scoped>
-.featured-section { padding: 3rem 2rem; }
+.featured-section { padding: 2rem 2rem 3rem; }
 .featured-heading { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 16px; margin-bottom: 28px; }
 .featured-heading h2 { font-size: 2.25rem; font-weight: 700; }
 .featured-heading h2 span { color: #f47a08; }

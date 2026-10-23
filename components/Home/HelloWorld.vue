@@ -8,7 +8,7 @@
     </div>
     <div class="intro-summary">
       <div class="intro-summary-header">
-        <span><i aria-hidden="true"></i> PRODUCT ENGINEERING</span>
+        <span><i aria-hidden="true"></i> SENIOR FRONT-END DEVELOPER</span>
       </div>
       <div class="intro-experience">
         <strong>8<span>+</span></strong>
@@ -40,7 +40,7 @@
 .home-intro h1 span { color: #f47a08; }
 .intro-role { color: #ffffffb3; margin: 12px 0 6px; font-size: 1.5rem; }
 .intro-summary { position: relative; overflow: hidden; padding: clamp(20px, 2.4vw, 30px); border: 1px solid #ffffff15; border-radius: 18px; background: radial-gradient(ellipse at 94% 4%, #f47a0817, transparent 38%), linear-gradient(145deg, #ffffff07, #ffffff02); }
-.intro-summary::after { position: absolute; right: -74px; bottom: -112px; width: 250px; height: 250px; border: 1px solid #f47a081c; border-radius: 50%; box-shadow: 0 0 0 26px #f47a0806, 0 0 0 54px #f47a0804; content: ''; pointer-events: none; }
+.intro-summary::after { position: absolute; right: -74px; bottom: -112px; width: 250px; height: 250px; border: 1px solid #f47a081c; border-radius: 50%; box-shadow: 0 0 0 26px #f47a0806, 0 0 0 54px #f47a0804; content: ''; pointer-events: none; transform-origin: center; animation: intro-orbit-pulse 8s ease-in-out infinite; }
 .intro-summary-header { display: flex; align-items: center; justify-content: space-between; gap: 12px; color: #ffffff80; font-size: .68rem; font-weight: 700; letter-spacing: .13em; }
 .intro-summary-header > span:first-child { display: inline-flex; align-items: center; gap: 8px; color: #ff9b42; }
 .intro-summary-header i { width: 7px; height: 7px; border-radius: 50%; background: #ff8b28; box-shadow: 0 0 12px #ff8b2890; }
@@ -62,5 +62,6 @@
 @media (min-width: 800px) { .home-intro { grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); align-items: center; gap: 2rem; } }
 @media (min-width: 1280px) { .home-intro { padding-inline: 5rem; } }
 @media (max-width: 420px) { .intro-summary-header { font-size: .58rem; letter-spacing: .09em; } .intro-domains { gap: 6px; font-size: .74rem; } .intro-skills { gap: 6px; } .intro-skills li { width: 34px; height: 34px; } .intro-skills img { width: 19px; height: 19px; } }
-@media (prefers-reduced-motion: reduce) { .intro-skills li, .intro-more { transition: none; } }
+@keyframes intro-orbit-pulse { 0%, 100% { opacity: .48; transform: scale(.96); } 50% { opacity: .9; transform: scale(1.035); } }
+@media (prefers-reduced-motion: reduce) { .intro-summary::after { animation: none; } .intro-skills li, .intro-more { transition: none; } }
 </style>

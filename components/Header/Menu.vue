@@ -30,6 +30,12 @@ const isActive = menu => route.path === menu.path || (menu.detail && route.path.
 .site-nav a:hover, .site-nav a:focus-visible { color: #ffab60; background: #f47a080c; }
 .site-nav a.active { color: #f47a08; background: #f47a0812; }
 @keyframes menu-item-enter { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+@media (min-width: 900px) {
+  .site-nav { flex: 0 1 auto; padding: 5px; border: 1px solid #ffffff0d; border-radius: 13px; background: #ffffff04; }
+  .site-nav ul { gap: 2px; }
+  .site-nav a { gap: 8px; padding: 10px 12px; border-radius: 9px; font-size: 1rem; }
+  .site-nav a.active { color: #ffab60; background: linear-gradient(135deg, #f47a081c, #f47a080a); box-shadow: inset 0 0 0 1px #f47a081a; }
+}
 @media (min-width: 900px) and (max-width: 1100px) { .site-nav ul { gap: 8px; } .site-nav a { padding: 10px 8px; } .site-nav svg { display: none; } }
 @media (max-width: 899px) {
   .site-nav { position: fixed; z-index: 40; inset: auto 12px calc(10px + env(safe-area-inset-bottom)); padding: 6px; border: 1px solid #ffffff17; border-radius: 18px; background: #202020eF; box-shadow: 0 8px 28px #0008, inset 0 1px #ffffff08; backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); }
