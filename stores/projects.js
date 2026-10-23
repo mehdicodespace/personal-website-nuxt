@@ -64,7 +64,7 @@ export default defineStore("projects", {
                     },
                 ],
                 mainMedia: 0,
-                used: ["react", "next", "vue", "nuxt", "redux", "pinia", "tailwind", "tradingview", "typescript"],
+                used: ["react", "next", "vue", "nuxt", "typescript", "redux", "pinia", "tailwind", "tradingview"],
                 related_experience_id: 7
             },
             {
@@ -428,7 +428,7 @@ export default defineStore("projects", {
                     },
                 ],
                 mainMedia: 0,
-                used: ["react", "next", "vue", "nuxt", "redux", "pinia", "tailwind", "typescript"],
+                used: ["react", "next", "vue", "nuxt", "typescript", "redux", "pinia", "tailwind"],
                 related_experience_id: 1,
             },
             {
