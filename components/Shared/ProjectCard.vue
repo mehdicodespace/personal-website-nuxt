@@ -22,10 +22,8 @@
         </span>
         <span v-else class="project-card-category">{{ project.category }}</span>
       </div>
-      <div class="project-card-heading" data-skeleton>
-        <h3><NuxtLink :to="`/project/${project.name}`">{{ project.name }}</NuxtLink></h3>
-        <p class="project-card-title">{{ project.title }}</p>
-      </div>
+      <h3 data-skeleton><NuxtLink :to="`/project/${project.name}`">{{ project.name }}</NuxtLink></h3>
+      <p class="project-card-title" data-skeleton>{{ project.title }}</p>
       <p class="project-card-description" data-skeleton>{{ project.description }}</p>
       <div class="project-card-footer" data-skeleton>
         <div class="project-card-stack" aria-label="Technologies">
@@ -59,30 +57,29 @@ function openProject(event) {
 </script>
 
 <style scoped>
-.project-card { position: relative; display: flex; min-width: 0; height: 100%; flex-direction: column; overflow: hidden; border: 1px solid #ffffff15; border-radius: 18px; background: linear-gradient(155deg, #292929 0%, #222323 62%, #202122 100%); box-shadow: 0 14px 34px #00000018; transition: border-color .24s, transform .24s, box-shadow .24s; cursor: pointer; }
-.project-card:hover { border-color: #f47a0870; box-shadow: 0 18px 42px #00000035, 0 0 28px #f47a080a; transform: translateY(-4px); }
+.project-card { position: relative; min-width: 0; border: 1px solid #ffffff12; border-radius: 16px; background: #242424; overflow: hidden; transition: border-color .2s, transform .2s; cursor: pointer; }
+.project-card:hover { border-color: #f47a0866; transform: translateY(-3px); }
 .project-card:focus-visible { outline: 2px solid #f47a08; outline-offset: 4px; }
-.project-card-preview { position: relative; padding: 22px 30px 7px; background: radial-gradient(ellipse at 50% 20%, #f47a0810 0%, transparent 64%), linear-gradient(145deg, #2d2d2b, #202121); }
+.project-card-preview { padding: 28px 36px 12px; background: linear-gradient(145deg, #30302e, #202121); }
 .project-card-screen { width: 100%; cursor: zoom-in; border-radius: 12px; }
 .project-card-screen:focus-visible { outline: 2px solid #f47a08; outline-offset: 8px; }
-.project-card-screen :deep(.screen) { height: auto; aspect-ratio: 16 / 9; }
+.project-card-screen :deep(.screen) { height: auto; aspect-ratio: 16 / 10; }
 .project-card-screen :deep(.keys), .project-card-screen :deep(.comp) { left: -22px; width: calc(100% + 44px); }
 .project-card-screen :deep(.keys) { border-left-width: 22px; border-right-width: 22px; border-bottom-width: 24px; }
 .project-card-screen :deep(.board) { border-bottom-width: 13px; }
 .project-card-screen :deep(.touchpad) { top: 16px; width: 35%; border-bottom-width: 6px; }
 .project-card-screen :deep(.comp) { height: 9px; }
 .project-card-screen :deep(.notch) { width: 30%; height: 7px; }
-.project-card-copy { display: flex; flex: 1; flex-direction: column; padding: 18px 22px 20px; }
-.project-card-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 7px; min-height: 23px; margin-bottom: 13px; }
-.project-card-category { display: inline-flex; align-items: center; padding: 4px 9px; border: 1px solid #ffffff1c; border-radius: 999px; background: #ffffff08; color: #c9c9c9; font-size: .7rem; font-weight: 550; line-height: 1.2; white-space: nowrap; }
-.github-project-category { gap: 5px; border-color: #ffffff20; background: #171819; color: #d5d7da; }
+.project-card-copy { padding: 20px; }
+.project-card-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; min-height: 20px; margin-bottom: 9px; }
+.project-card-category { display: inline-flex; align-items: center; padding: 3px 8px; border: 1px solid #ffffff1c; border-radius: 999px; background: #ffffff08; color: #d0d0d0; font-size: .72rem; font-weight: 550; line-height: 1.25; }
+.github-project-category { display: inline-flex; align-items: center; gap: 5px; padding: 3px 8px; border: 1px solid #ffffff17; border-radius: 999px; background: #161718; color: #d5d7da; font-size: .72rem; font-weight: 550; }
 .github-project-category svg { width: 13px; height: 13px; color: #e6e8eb; }
-.project-kind { display: inline-flex; align-items: center; padding: 4px 8px; border: 1px solid #f47a0840; border-radius: 999px; background: #f47a080c; color: #ffb16b; font-size: .67rem; font-weight: 650; letter-spacing: .025em; line-height: 1.2; white-space: nowrap; }
-.project-card-heading { display: block; margin-bottom: 0; }
-.project-card h3 { margin: 0; color: #ff8619; font-size: 1.48rem; font-weight: 720; line-height: 1.15; letter-spacing: -.02em; }
-.project-card-title { margin-top: 6px; color: #ffffffdf; font-size: .98rem; font-weight: 550; line-height: 1.4; }
-.project-card-description { display: -webkit-box; min-height: 3em; margin-top: 10px; overflow: hidden; color: #ffffff9c; font-size: .91rem; line-height: 1.55; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
-.project-card-footer { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; margin-top: auto; padding-top: 16px; border-top: 1px solid #ffffff12; }
+.project-kind { display: inline-flex; align-items: center; padding: 3px 7px; border: 1px solid #f47a0840; border-radius: 999px; color: #ffb16b; font-size: .68rem; font-weight: 650; letter-spacing: .025em; line-height: 1; }
+.project-card h3 { font-size: 1.5rem; font-weight: 720; color: #f47a08; }
+.project-card-title { margin-top: 5px; color: #ffffffdf; font-weight: 600; }
+.project-card-description { margin-top: 10px; color: #ffffff99; font-size: .91rem; line-height: 1.6; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; min-height: 3.2em; }
+.project-card-footer { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; margin-top: 20px; padding-top: 16px; border-top: 1px solid #ffffff0d; }
 .project-card-footer a { color: #f47a08; font-size: .9rem; font-weight: 600; }
 .project-card-links { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 14px; }
 .project-card-links a { display: inline-flex; align-items: center; gap: 4px; white-space: nowrap; }
@@ -92,6 +89,6 @@ function openProject(event) {
 .project-card.content-pending:hover { transform: none; border-color: #ffffff12; }
 .project-card.content-pending .project-card-category::after { right: 65%; }
 .project-card.content-pending h3::after { right: 35%; }
-@media (max-width: 549px) { .project-card-preview { padding: 18px 20px 6px; } .project-card-copy { padding: 16px 18px 18px; } .project-card-meta { margin-bottom: 11px; } .project-card h3 { font-size: 1.32rem; } .project-card-footer { gap: 10px; } .project-card-links { gap: 10px; } }
+@media (max-width: 549px) { .project-card-preview { padding: 20px 20px 8px; } }
 @media (prefers-reduced-motion: reduce) { .project-card { transition: none; } .loading > *, .textLoading::before { animation: none; } }
 </style>
