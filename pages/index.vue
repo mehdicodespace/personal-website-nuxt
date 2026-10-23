@@ -44,7 +44,11 @@ export default {
     ...mapState(useProjectsStore, ["getPortfolios", "getPortfolio", "galleryVisible", "activeProjectID"]),
     ...mapState(usePostsStore, ["getPosts"]),
     featuredProjects() {
-      return this.getPortfolios(6);
+      const featuredOrder = ["BitBank", "Sarmayex Market", "Sarmayex", "ReplyLane", "Skycast", "Metriland"];
+      const projects = this.getPortfolios();
+      return featuredOrder
+        .map(name => projects.find(project => project.name === name))
+        .filter(Boolean);
     },
   },
 };

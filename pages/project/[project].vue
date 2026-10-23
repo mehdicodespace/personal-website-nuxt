@@ -23,10 +23,22 @@
     </span>
 
     <!-- Category Badge -->
+    <span v-if="project.projectKind === 'independent'" class="mt-4 project-origin">
+      Independent project · GitHub
+    </span>
     <span class="mt-4 bg-main-orange/20 text-main-orange px-4 py-2 rounded-full text-sm font-medium">
       {{ project.category }}
     </span>
     <p class="sm:w-8/12 mx-auto mt-2 text-lg text-center">{{ project.description }}</p>
+
+    <div v-if="project.sourceCode || project.liveDemo" class="project-links">
+      <a v-if="project.sourceCode" :href="project.sourceCode" target="_blank" rel="noopener noreferrer">
+        Source code <span aria-hidden="true">↗</span>
+      </a>
+      <a v-if="project.liveDemo" :href="project.liveDemo" target="_blank" rel="noopener noreferrer" class="project-live-link">
+        Live demo <span aria-hidden="true">↗</span>
+      </a>
+    </div>
 
     <ul class="flex gap-4 mt-4">
       <li v-for="skill in project.used" :key="skill">
@@ -87,7 +99,7 @@
       </div>
     </div>
 
-    <div class="mt-12 text-xl text-center">
+    <div v-if="!project.sourceCode" class="mt-12 text-xl text-center">
       More description of the projects will be added later
     </div>
     <transition name="fadeScale">
@@ -184,6 +196,12 @@ export default {
 </script>
 
 <style scoped>
+.project-origin { padding: 5px 10px; border: 1px solid #f47a0855; border-radius: 999px; background: #f47a0814; color: #ffb16b; font-size: .82rem; font-weight: 600; }
+.project-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 16px; }
+.project-links a { display: inline-flex; align-items: center; gap: 8px; min-height: 42px; padding: 0 16px; border: 1px solid #ffffff26; border-radius: 9px; color: #f3f3f3; font-size: .94rem; font-weight: 600; transition: border-color .2s, color .2s, background .2s; }
+.project-links a:hover { border-color: #f47a0880; color: #ffb16b; background: #f47a0812; }
+.project-links .project-live-link { border-color: #f47a0870; color: #ffb16b; }
+.project-links .project-live-link:hover { background: #f47a0824; }
 .gallery {
   position: absolute;
   bottom: 0;

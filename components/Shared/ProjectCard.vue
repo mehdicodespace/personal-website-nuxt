@@ -14,7 +14,10 @@
       </div>
     </div>
     <div class="project-card-copy">
-      <p class="project-card-category" data-skeleton>{{ project.category }}</p>
+      <div class="project-card-meta" data-skeleton>
+        <span v-if="project.projectKind === 'independent'" class="project-kind">Independent</span>
+        <p class="project-card-category">{{ project.category }}</p>
+      </div>
       <h3 data-skeleton><NuxtLink :to="`/project/${project.name}`">{{ project.name }}</NuxtLink></h3>
       <p class="project-card-title" data-skeleton>{{ project.title }}</p>
       <p class="project-card-description" data-skeleton>{{ project.description }}</p>
@@ -22,7 +25,11 @@
         <div class="project-card-stack" aria-label="Technologies">
           <img v-for="skill in project.used.slice(0, 5)" :key="skill" :src="`/imgs/skills/${skill}.svg`" :alt="skill" :title="skill" width="20" height="20" loading="lazy" />
         </div>
-        <NuxtLink :to="`/project/${project.name}`">View Project <span aria-hidden="true">→</span></NuxtLink>
+        <div v-if="project.sourceCode || project.liveDemo" class="project-card-links">
+          <a v-if="project.sourceCode" :href="project.sourceCode" target="_blank" rel="noopener noreferrer" @click.stop>Source <span aria-hidden="true">↗</span></a>
+          <a v-if="project.liveDemo" :href="project.liveDemo" target="_blank" rel="noopener noreferrer" @click.stop>Live demo <span aria-hidden="true">↗</span></a>
+        </div>
+        <NuxtLink v-else :to="`/project/${project.name}`">View Project <span aria-hidden="true">→</span></NuxtLink>
       </div>
     </div>
   </article>
@@ -60,12 +67,16 @@ function openProject(event) {
 .project-card-screen :deep(.comp) { height: 9px; }
 .project-card-screen :deep(.notch) { width: 30%; height: 7px; }
 .project-card-copy { padding: 20px; }
-.project-card-category { color: #ffffff80; font-size: .8rem; margin-bottom: 9px; }
+.project-card-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; min-height: 20px; margin-bottom: 9px; }
+.project-card-category { color: #ffffff80; font-size: .8rem; }
+.project-kind { display: inline-flex; align-items: center; padding: 3px 7px; border: 1px solid #f47a0840; border-radius: 999px; color: #ffb16b; font-size: .68rem; font-weight: 650; letter-spacing: .025em; line-height: 1; }
 .project-card h3 { font-size: 1.5rem; font-weight: 700; color: #f47a08; }
 .project-card-title { margin-top: 5px; color: #ffffffdf; }
 .project-card-description { margin-top: 10px; color: #ffffff99; font-size: .95rem; line-height: 1.6; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; min-height: 3.2em; }
-.project-card-footer { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 20px; padding-top: 16px; border-top: 1px solid #ffffff0d; }
+.project-card-footer { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; margin-top: 20px; padding-top: 16px; border-top: 1px solid #ffffff0d; }
 .project-card-footer a { color: #f47a08; font-size: .9rem; font-weight: 600; }
+.project-card-links { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 14px; }
+.project-card-links a { display: inline-flex; align-items: center; gap: 4px; white-space: nowrap; }
 .project-card-stack { display: flex; gap: 10px; align-items: center; }
 .project-card-stack img { width: 20px; height: 20px; object-fit: contain; }
 .project-card h3 a:hover, .project-card-footer a:hover { color: #ffae63; }

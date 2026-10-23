@@ -9,6 +9,12 @@
         </div>
       </div>
       <div class="gallery-actions">
+        <a v-if="project.sourceCode" :href="project.sourceCode" target="_blank" rel="noopener noreferrer" class="gallery-external-link">
+          Source code <span aria-hidden="true">↗</span>
+        </a>
+        <a v-if="project.liveDemo" :href="project.liveDemo" target="_blank" rel="noopener noreferrer" class="gallery-external-link gallery-live-link">
+          Live demo <span aria-hidden="true">↗</span>
+        </a>
         <button v-if="currentMedia.type === 'img' && currentMedia.scroll" type="button" class="gallery-action" @click="toggleImgScroll">
           <IconArrow :class="['gallery-scroll-icon', imgScrollDown ? '-rotate-90' : 'rotate-90']" />
           <span>{{ imgScrollDown ? 'Pause screenshot scroll' : 'Auto-scroll screenshot' }}</span>
@@ -186,7 +192,11 @@ export default {
 .gallery-project-link:hover { color: #f47a08; }
 .gallery-project-link span { color: #f47a08; font-size: .85rem; }
 .gallery-media-title { max-width: min(58vw, 720px); overflow: hidden; color: #ffffffa3; font-size: .98rem; text-overflow: ellipsis; white-space: nowrap; }
-.gallery-actions { display: flex; align-items: center; gap: 10px; }
+.gallery-actions { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 8px; }
+.gallery-external-link { display: inline-flex; align-items: center; justify-content: center; gap: 6px; height: 42px; padding: 0 12px; border: 1px solid #ffffff20; border-radius: 10px; color: #ffffffd9; font-size: .9rem; font-weight: 600; white-space: nowrap; transition: border-color .2s, background .2s, color .2s; }
+.gallery-external-link:hover { border-color: #ffffff55; background: #ffffff0c; color: #fff; }
+.gallery-live-link { border-color: #f47a0870; background: #f47a0814; color: #ffb16b; }
+.gallery-live-link:hover { border-color: #f47a08; background: #f47a0824; color: #ffbf80; }
 .gallery-action, .gallery-close, .gallery-project-cta { display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 42px; padding: 0 14px; border: 1px solid #ffffff20; border-radius: 10px; background: #ffffff0a; color: #ffffffd9; transition: border-color .2s, background .2s, color .2s; }
 .gallery-action:hover, .gallery-close:hover, .gallery-project-cta:hover { border-color: #f47a0880; background: #f47a081c; color: #ffae63; }
 .gallery-action:disabled, .gallery-arrow:disabled { opacity: .55; cursor: wait; }
@@ -220,7 +230,7 @@ export default {
   .gallery-project-link { font-size: 1.05rem; }
   .gallery-media-title { max-width: calc(100vw - 110px); font-size: .86rem; }
   .gallery-actions { width: 100%; gap: 6px; flex-wrap: wrap; }
-  .gallery-action, .gallery-project-cta { height: 38px; padding: 0 10px; font-size: .76rem; }
+  .gallery-action, .gallery-project-cta, .gallery-external-link { height: 38px; padding: 0 10px; font-size: .76rem; }
   .gallery-close { position: absolute; top: 12px; right: 14px; width: 40px; height: 40px; }
   .gallery-stage { padding: 6px 10px; }
   .gallery-stage :deep(.screen) { max-height: calc(100dvh - 188px); }
@@ -231,5 +241,5 @@ export default {
   .gallery-thumbnail { width: 80px; height: 50px; }
 }
 @media (min-width: 641px) { .gallery-arrow :deep(svg) { width: 32px; height: 32px; } }
-@media (prefers-reduced-motion: reduce) { .gallery-action, .gallery-project-cta, .gallery-close, .gallery-arrow, .gallery-thumbnail { transition: none; } .gallery-media-enter-active, .gallery-media-leave-active { transition-duration: .01ms; will-change: auto; } }
+@media (prefers-reduced-motion: reduce) { .gallery-action, .gallery-project-cta, .gallery-external-link, .gallery-close, .gallery-arrow, .gallery-thumbnail { transition: none; } .gallery-media-enter-active, .gallery-media-leave-active { transition-duration: .01ms; will-change: auto; } }
 </style>
