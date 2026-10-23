@@ -86,8 +86,15 @@
 @media (min-width: 550px) { .home-intro { padding-inline: 3rem; } }
 @media (min-width: 800px) { .home-intro { grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); align-items: center; gap: 2rem; } }
 @media (min-width: 1280px) { .home-intro { padding-inline: 5rem; } }
-@media (max-width: 799px) { .intro-trace { top: 24%; right: -8%; width: 76%; opacity: .28; mask-image: linear-gradient(90deg, transparent 0%, #000 38%); } }
-@media (max-width: 420px) { .intro-summary-header { font-size: .58rem; letter-spacing: .09em; } .intro-domains { gap: 6px; font-size: .74rem; } .intro-skills { gap: 6px; } .intro-skills li { width: 34px; height: 34px; } .intro-skills img { width: 19px; height: 19px; } }
+@media (max-width: 799px) {
+  .intro-summary { background: radial-gradient(ellipse at 94% 4%, #f47a0808, transparent 30%), linear-gradient(145deg, #ffffff07, #ffffff02); }
+  .intro-summary-header { font-size: .78rem; letter-spacing: .08em; }
+  .intro-trace { top: 14%; right: -8%; width: 70%; opacity: .28; mask-image: linear-gradient(90deg, transparent 0%, transparent 48%, #000 72%); }
+  .intro-ripples { opacity: .5; }
+  .intro-ripples span { border-color: #ff9b4238; box-shadow: 0 0 8px #f47a0815, inset 0 0 6px #f47a080a; }
+  .intro-ripples::before { opacity: .6; background: radial-gradient(circle, #f47a0810 0, #f47a0805 38%, transparent 70%); }
+}
+@media (max-width: 420px) { .intro-summary-header { font-size: .74rem; letter-spacing: .065em; } .intro-domains { gap: 6px; font-size: .74rem; } .intro-skills { gap: 6px; } .intro-skills li { width: 34px; height: 34px; } .intro-skills img { width: 19px; height: 19px; } }
 @keyframes intro-ripple { 0% { opacity: 0; transform: scale(.42); } 10% { opacity: .3; } 68% { opacity: .15; } 100% { opacity: 0; transform: scale(4.7); } }
 @keyframes intro-ripple-glow { 0% { opacity: .26; transform: scale(.45); } 100% { opacity: 0; transform: scale(3.7); } }
 @media (prefers-reduced-motion: reduce) { .intro-ripples span, .intro-ripples::before { animation: none; opacity: .16; transform: scale(2.4); } .intro-trace-dot animateMotion { display: none; } .intro-skills li, .intro-more { transition: none; } }
