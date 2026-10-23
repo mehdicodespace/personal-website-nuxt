@@ -29,7 +29,7 @@ onUnmounted(() => window.removeEventListener('scroll', updateScrollState));
 @media (min-width: 1280px) { .site-header { padding-inline: 5rem; } }
 @media (min-width: 900px) {
   .header-shell { padding: 7px 10px 7px 14px; border: 1px solid #ffffff10; border-radius: 18px; background: #17171728; box-shadow: 0 12px 34px #00000012, inset 0 1px #ffffff06; backdrop-filter: blur(3px) saturate(120%); -webkit-backdrop-filter: blur(3px) saturate(120%); }
-  .site-header.is-scrolled { padding: 0; border-bottom: 1px solid #ffffff12; background: #17171768; box-shadow: 0 8px 24px #00000018; backdrop-filter: blur(9px) saturate(125%); -webkit-backdrop-filter: blur(9px) saturate(125%); }
+  .site-header.is-scrolled { padding: 0; border-bottom: 1px solid #ffffff12; background: #17171768; box-shadow: 0 8px 24px #00000018; backdrop-filter: none; -webkit-backdrop-filter: none; }
   .site-header.is-scrolled .header-shell { max-width: none; padding: 7px 5rem; border: 0; border-radius: 0; background: transparent; box-shadow: none; backdrop-filter: none; -webkit-backdrop-filter: none; }
 }
 @media (min-width: 900px) and (max-width: 1100px) { .header-shell { gap: 1.1rem; } .header-brand :deep(img) { width: 58px; } .header-resume :deep(a) { width: 126px; } }
@@ -37,7 +37,7 @@ onUnmounted(() => window.removeEventListener('scroll', updateScrollState));
   .header-shell { gap: 1rem; }
   .header-brand :deep(img) { width: 58px; }
   .header-resume :deep(a) { width: 128px; height: 44px; }
-  .site-header.is-scrolled { padding: .25rem 0; border-bottom: 1px solid #ffffff12; background: #17171778; box-shadow: 0 8px 24px #00000018; backdrop-filter: blur(9px) saturate(125%); -webkit-backdrop-filter: blur(9px) saturate(125%); }
+  .site-header.is-scrolled { padding: .25rem 0; border-bottom: 1px solid #ffffff12; background: #17171778; box-shadow: 0 8px 24px #00000018; backdrop-filter: none; -webkit-backdrop-filter: none; }
   .site-header.is-scrolled .header-shell { max-width: none; padding-inline: 1rem; }
 }
 @media (max-width: 420px) { .site-header { padding: 1rem .8rem .5rem; } .header-brand :deep(img) { width: 52px; } .header-resume :deep(a) { width: 112px; height: 40px; font-size: .9rem; } }
