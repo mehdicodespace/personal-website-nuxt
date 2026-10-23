@@ -10,14 +10,14 @@
       </div>
       <div class="gallery-actions">
         <a v-if="project.sourceCode" :href="project.sourceCode" target="_blank" rel="noopener noreferrer" class="gallery-external-link">
-          Source code <span aria-hidden="true">↗</span>
+          <span>Source code</span><span aria-hidden="true">↗</span>
         </a>
         <a v-if="project.liveDemo" :href="project.liveDemo" target="_blank" rel="noopener noreferrer" class="gallery-external-link gallery-live-link">
-          Live demo <span aria-hidden="true">↗</span>
+          <span>Live demo</span><span aria-hidden="true">↗</span>
         </a>
-        <button v-if="currentMedia.type === 'img' && currentMedia.scroll" type="button" class="gallery-action" @click="toggleImgScroll">
+        <button v-if="currentMedia.type === 'img' && currentMedia.scroll" type="button" class="gallery-action" :aria-label="imgScrollDown ? 'Pause screenshot scroll' : 'Auto-scroll screenshot'" @click="toggleImgScroll">
           <IconArrow :class="['gallery-scroll-icon', imgScrollDown ? '-rotate-90' : 'rotate-90']" />
-          <span>{{ imgScrollDown ? 'Pause screenshot scroll' : 'Auto-scroll screenshot' }}</span>
+          <span>{{ imgScrollDown ? 'Pause scroll' : 'Auto-scroll' }}</span>
         </button>
         <button v-if="currentMedia.type === 'video'" type="button" class="gallery-action" :disabled="isMediaTransitioning" @click="toggleVideo($refs.screen.$refs.video)">
           <IconPlay v-if="!videoPlaying" class="w-4 h-4" /><IconPause v-else class="w-4 h-4" />
@@ -32,7 +32,7 @@
 
     <main class="gallery-stage" @click="closeOnStageBackdrop">
       <Transition name="gallery-media" mode="out-in" @before-leave="isMediaTransitioning = true" @after-enter="isMediaTransitioning = false" @enter-cancelled="isMediaTransitioning = false" @leave-cancelled="isMediaTransitioning = false">
-        <div :key="`${project.id}:${currentMedia.src}`" class="gallery-media-frame">
+        <div :key="`${project.id}:${currentMedia.src}`" class="gallery-media-frame" :class="{ 'gallery-media-frame--mobile': currentMedia.mobile && currentMedia.type !== 'video' }">
           <button v-if="navigation && project.media.length > 1" type="button" aria-label="Previous project image"
             :disabled="isMediaTransitioning"
             @click="prevMedia"
@@ -45,7 +45,7 @@
             :class="['gallery-screen-wrapper relative my-4 justify-center',
             currentMedia.mobile && currentMedia.type !== 'video' ? 'gallery-screen-wrapper--mobile' : 'gallery-screen-wrapper--desktop']"
             :media="currentMedia"
-            :screen-height="currentMedia.mobile && currentMedia.type !== 'video' ? 'lg:h-160 h-[min(70dvh,600px)]': 'lg:h-160 md:h-140 sm:h-104 xs:h-[min(64dvh,520px)]'"
+            :screen-height="''"
             :only-screen="true"
             :zoom="false"
             :scroll="imgScrollDown"
@@ -202,15 +202,20 @@ export default {
 .gallery-scroll-icon { width: 20px; height: 20px; }
 .gallery-close { width: 42px; padding: 0; color: #ffffffad; }
 .gallery-stage { position: relative; display: flex; min-height: 0; align-items: center; justify-content: center; padding: 22px 6vw; cursor: pointer; }
-.gallery-stage :deep(.screen) { max-height: calc(100dvh - 230px); cursor: default; }
-.gallery-media-frame { display: grid; width: 100%; min-width: 0; grid-template-columns: clamp(38px, 4vw, 60px) minmax(0, 1fr) clamp(38px, 4vw, 60px); align-items: center; justify-items: center; gap: clamp(8px, 2vw, 28px); }
+.gallery-stage :deep(.screen) { width: 100%; height: auto; aspect-ratio: 16 / 9; cursor: default; }
+.gallery-media-frame { position: relative; display: flex; width: 100%; min-width: 0; align-items: center; justify-content: center; }
 .gallery-screen-wrapper { width: 100%; min-width: 0; }
-.gallery-screen-wrapper--mobile { width: min(100%, 400px); }
-.gallery-screen-wrapper--desktop { width: min(100%, 960px); }
+.gallery-screen-wrapper--mobile { width: min(100%, 400px, calc(75dvh - 141px)); }
+.gallery-screen-wrapper--mobile :deep(.screen) { aspect-ratio: 3 / 4; }
+.gallery-screen-wrapper--desktop { width: min(100%, 960px, calc(178dvh - 409px)); }
 .gallery-media-enter-active, .gallery-media-leave-active { transition: opacity .34s ease, transform .42s cubic-bezier(.2, .8, .2, 1); will-change: opacity, transform; }
 .gallery-media-enter-from { opacity: 0; transform: translate3d(0, 16px, 0) scale(.985); }
 .gallery-media-leave-to { opacity: 0; transform: translate3d(0, -8px, 0) scale(.99); }
-.gallery-arrow { position: relative; z-index: 1; display: grid; width: 54px; height: 54px; place-items: center; border: 1px solid #ffffff28; border-radius: 50%; background: #171717e8; color: #fff; cursor: pointer; transition: border-color .2s, color .2s, background .2s; }
+.gallery-arrow { position: absolute; z-index: 1; top: 50%; display: grid; width: 54px; height: 54px; place-items: center; border: 1px solid #ffffff28; border-radius: 50%; background: #171717e8; color: #fff; cursor: pointer; transform: translateY(-50%); transition: border-color .2s, color .2s, background .2s; }
+.gallery-prev { left: calc(50% - min(480px, 44vw) - 70px); }
+.gallery-next { right: calc(50% - min(480px, 44vw) - 70px); }
+.gallery-media-frame--mobile .gallery-prev { left: calc(50% - min(200px, 44vw) - 70px); }
+.gallery-media-frame--mobile .gallery-next { right: calc(50% - min(200px, 44vw) - 70px); }
 .gallery-arrow:hover { border-color: #f47a08; background: #24211e; color: #f47a08; }
 .gallery-thumbnails { display: flex; align-items: center; gap: 10px; overflow-x: auto; padding: 12px clamp(18px, 4vw, 56px) max(14px, env(safe-area-inset-bottom)); border-top: 1px solid #ffffff12; background: #171717d9; scrollbar-width: thin; scrollbar-color: #f47a0860 transparent; cursor: grab; touch-action: pan-x; user-select: none; -webkit-user-select: none; }
 .gallery-thumbnails.is-dragging { cursor: grabbing; user-select: none; }
@@ -227,13 +232,18 @@ export default {
   .gallery-count { font-size: .92rem; }
   .gallery-project-link { font-size: 1.05rem; }
   .gallery-media-title { max-width: calc(100vw - 110px); font-size: .86rem; }
-  .gallery-actions { width: 100%; gap: 6px; flex-wrap: wrap; }
-  .gallery-action, .gallery-project-cta, .gallery-external-link { height: 38px; padding: 0 10px; font-size: .76rem; }
+  .gallery-actions { display: grid; width: 100%; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; }
+  .gallery-action, .gallery-project-cta, .gallery-external-link { width: 100%; min-width: 0; height: 38px; padding: 0 8px; font-size: .76rem; white-space: nowrap; }
+  .gallery-action span, .gallery-project-cta span:first-child, .gallery-external-link span:first-child { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
   .gallery-close { position: absolute; top: 12px; right: 14px; width: 40px; height: 40px; }
   .gallery-stage { padding: 6px 10px; }
-  .gallery-stage :deep(.screen) { max-height: calc(100dvh - 188px); }
-  .gallery-media-frame { grid-template-columns: 34px minmax(0, 1fr) 34px; gap: 6px; }
+  .gallery-screen-wrapper--mobile { width: min(100%, 400px, calc(75dvh - 141px)); }
+  .gallery-screen-wrapper--desktop { width: min(100%, 960px, calc(178dvh - 334px)); }
+  .gallery-media-frame { display: grid; grid-template-columns: 34px minmax(0, 1fr) 34px; gap: 6px; }
   .gallery-arrow { width: 34px; height: 34px; }
+  .gallery-prev { position: relative; top: auto; left: auto; grid-column: 1; grid-row: 1; transform: none; }
+  .gallery-next { position: relative; top: auto; right: auto; grid-column: 3; grid-row: 1; transform: none; }
+  .gallery-screen-wrapper { grid-column: 2; grid-row: 1; }
   .gallery-arrow :deep(svg) { width: 20px; height: 20px; }
   .gallery-thumbnails { gap: 8px; padding: 10px 12px max(12px, env(safe-area-inset-bottom)); }
   .gallery-thumbnail { width: 80px; height: 50px; }
