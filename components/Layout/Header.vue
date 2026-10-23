@@ -9,18 +9,22 @@
 </template>
 <script setup>
 const isScrolled = ref(false);
-const updateScrollState = () => { isScrolled.value = window.scrollY > 32; };
+const updateScrollState = () => { isScrolled.value = window.innerWidth >= 900 && window.scrollY > 32; };
 
 onMounted(() => {
   updateScrollState();
   window.addEventListener('scroll', updateScrollState, { passive: true });
+  window.addEventListener('resize', updateScrollState, { passive: true });
 });
 
-onUnmounted(() => window.removeEventListener('scroll', updateScrollState));
+onUnmounted(() => {
+  window.removeEventListener('scroll', updateScrollState);
+  window.removeEventListener('resize', updateScrollState);
+});
 </script>
 <style scoped>
-.site-header { position: relative; z-index: 60; padding: 1.25rem 1rem .75rem; transition: padding .3s, background .3s, border-color .3s; }
-.header-shell { display: flex; width: 100%; max-width: 1720px; align-items: center; gap: clamp(1rem, 2.3vw, 2.5rem); margin-inline: auto; transition: max-width .35s, border-radius .35s, background .35s, padding .35s, box-shadow .35s; }
+.site-header { position: relative; z-index: 60; padding: 1.25rem 1rem .75rem; }
+.header-shell { display: flex; width: 100%; max-width: 1720px; align-items: center; gap: clamp(1rem, 2.3vw, 2.5rem); margin-inline: auto; }
 .header-brand { flex: 0 0 auto; }
 .header-brand :deep(img) { width: 68px; }
 .header-resume { flex: 0 0 auto; margin-left: auto; }
@@ -30,7 +34,7 @@ onUnmounted(() => window.removeEventListener('scroll', updateScrollState));
 @media (min-width: 900px) {
   .site-header { position: sticky; top: 0; }
   .header-shell { padding: 7px 10px 7px 14px; border: 1px solid #ffffff10; border-radius: 18px; background: #17171728; box-shadow: 0 12px 34px #00000012, inset 0 1px #ffffff06; backdrop-filter: blur(3px) saturate(120%); -webkit-backdrop-filter: blur(3px) saturate(120%); }
-  .site-header.is-scrolled { padding: 0; border-bottom: 1px solid #ffffff12; background: #171717; box-shadow: 0 8px 24px #00000018; backdrop-filter: none; -webkit-backdrop-filter: none; }
+  .site-header.is-scrolled { padding: 0; background: #171717; box-shadow: 0 8px 24px #00000018; }
   .site-header.is-scrolled .header-shell { max-width: none; padding: 7px 5rem; border: 0; border-radius: 0; background: transparent; box-shadow: none; backdrop-filter: none; -webkit-backdrop-filter: none; }
 }
 @media (min-width: 900px) and (max-width: 1100px) { .header-shell { gap: 1.1rem; } .header-brand :deep(img) { width: 58px; } .header-resume :deep(a) { width: 126px; } }
@@ -38,7 +42,6 @@ onUnmounted(() => window.removeEventListener('scroll', updateScrollState));
   .header-shell { gap: 1rem; }
   .header-brand :deep(img) { width: 58px; }
   .header-resume :deep(a) { width: 128px; height: 44px; }
-  .site-header.is-scrolled { padding: 1.25rem 1rem .75rem; border: 0; background: transparent; box-shadow: none; backdrop-filter: none; -webkit-backdrop-filter: none; }
 }
 @media (max-width: 420px) { .site-header { padding: 1rem .8rem .5rem; } .header-brand :deep(img) { width: 52px; } .header-resume :deep(a) { width: 112px; height: 40px; font-size: .9rem; } }
 </style>
