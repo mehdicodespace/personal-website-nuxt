@@ -33,34 +33,31 @@
     <main class="gallery-stage" @click="closeOnStageBackdrop">
       <Transition name="gallery-media" mode="out-in" @before-leave="isMediaTransitioning = true" @after-enter="isMediaTransitioning = false" @enter-cancelled="isMediaTransitioning = false" @leave-cancelled="isMediaTransitioning = false">
         <div :key="`${project.id}:${currentMedia.src}`" class="gallery-media-frame">
+          <button v-if="navigation && project.media.length > 1" type="button" aria-label="Previous project image"
+            :disabled="isMediaTransitioning"
+            @click="prevMedia"
+            class="gallery-arrow gallery-prev"
+          >
+            <IconArrow class="w-6 h-6 rotate-180" />
+          </button>
           <Shared-Screen
             ref="screen"
-            :class="['gallery-screen-wrapper relative mx-auto my-4 justify-center',
-            currentMedia.mobile && currentMedia.type !== 'video' ? 'sm:w-[400px] w-full' : 'lg:w-8/12 sm:w-11/12 w-full']"
+            :class="['gallery-screen-wrapper relative my-4 justify-center',
+            currentMedia.mobile && currentMedia.type !== 'video' ? 'gallery-screen-wrapper--mobile' : 'gallery-screen-wrapper--desktop']"
             :media="currentMedia"
             :screen-height="currentMedia.mobile && currentMedia.type !== 'video' ? 'lg:h-160 h-[min(70dvh,600px)]': 'lg:h-160 md:h-140 sm:h-104 xs:h-[min(64dvh,520px)]'"
             :only-screen="true"
             :zoom="false"
             :scroll="imgScrollDown"
             :video-controls="true"
+          />
+          <button v-if="navigation && project.media.length > 1" type="button" aria-label="Next project image"
+            :disabled="isMediaTransitioning"
+            @click="nextMedia"
+            class="gallery-arrow gallery-next"
           >
-            <template v-if="navigation && project.media.length > 1">
-              <button type="button" aria-label="Previous project image"
-                :disabled="isMediaTransitioning"
-                @click="prevMedia"
-                class="gallery-arrow gallery-prev"
-              >
-                <IconArrow class="w-6 h-6 rotate-180" />
-              </button>
-              <button type="button" aria-label="Next project image"
-                :disabled="isMediaTransitioning"
-                @click="nextMedia"
-                class="gallery-arrow gallery-next"
-              >
-                <IconArrow class="w-6 h-6" />
-              </button>
-            </template>
-          </Shared-Screen>
+            <IconArrow class="w-6 h-6" />
+          </button>
         </div>
       </Transition>
     </main>
@@ -104,7 +101,7 @@ export default {
   },
   methods: {
     closeOnStageBackdrop(event) {
-      if (event.target instanceof Element && event.target.closest('.gallery-screen-wrapper')) return;
+      if (event.target instanceof Element && event.target.closest('.gallery-screen-wrapper, .gallery-arrow')) return;
       this.hideGallery();
     },
     openProjectPage() {
@@ -206,14 +203,15 @@ export default {
 .gallery-close { width: 42px; padding: 0; color: #ffffffad; }
 .gallery-stage { position: relative; display: flex; min-height: 0; align-items: center; justify-content: center; padding: 22px 6vw; cursor: pointer; }
 .gallery-stage :deep(.screen) { max-height: calc(100dvh - 230px); cursor: default; }
-.gallery-media-frame { width: 100%; }
+.gallery-media-frame { display: grid; width: 100%; min-width: 0; grid-template-columns: clamp(38px, 4vw, 60px) minmax(0, 1fr) clamp(38px, 4vw, 60px); align-items: center; justify-items: center; gap: clamp(8px, 2vw, 28px); }
+.gallery-screen-wrapper { width: 100%; min-width: 0; }
+.gallery-screen-wrapper--mobile { width: min(100%, 400px); }
+.gallery-screen-wrapper--desktop { width: min(100%, 1120px); }
 .gallery-media-enter-active, .gallery-media-leave-active { transition: opacity .34s ease, transform .42s cubic-bezier(.2, .8, .2, 1); will-change: opacity, transform; }
 .gallery-media-enter-from { opacity: 0; transform: translate3d(0, 16px, 0) scale(.985); }
 .gallery-media-leave-to { opacity: 0; transform: translate3d(0, -8px, 0) scale(.99); }
-.gallery-arrow { position: absolute; z-index: 25; top: 50%; display: grid; width: 60px; height: 60px; place-items: center; transform: translateY(-50%); border: 1px solid #ffffff28; border-radius: 50%; background: #171717e8; color: #fff; cursor: pointer; transition: border-color .2s, color .2s, background .2s; }
+.gallery-arrow { position: relative; z-index: 1; display: grid; width: 54px; height: 54px; place-items: center; border: 1px solid #ffffff28; border-radius: 50%; background: #171717e8; color: #fff; cursor: pointer; transition: border-color .2s, color .2s, background .2s; }
 .gallery-arrow:hover { border-color: #f47a08; background: #24211e; color: #f47a08; }
-.gallery-prev { left: 12px; }
-.gallery-next { right: 12px; }
 .gallery-thumbnails { display: flex; align-items: center; gap: 10px; overflow-x: auto; padding: 12px clamp(18px, 4vw, 56px) max(14px, env(safe-area-inset-bottom)); border-top: 1px solid #ffffff12; background: #171717d9; scrollbar-width: thin; scrollbar-color: #f47a0860 transparent; cursor: grab; touch-action: pan-x; user-select: none; -webkit-user-select: none; }
 .gallery-thumbnails.is-dragging { cursor: grabbing; user-select: none; }
 .gallery-thumbnail { position: relative; flex: 0 0 auto; width: 96px; height: 58px; overflow: hidden; border: 1px solid #ffffff20; border-radius: 8px; background: #282828; cursor: pointer; opacity: .62; transition: opacity .2s, border-color .2s, transform .2s; }
@@ -234,9 +232,9 @@ export default {
   .gallery-close { position: absolute; top: 12px; right: 14px; width: 40px; height: 40px; }
   .gallery-stage { padding: 6px 10px; }
   .gallery-stage :deep(.screen) { max-height: calc(100dvh - 188px); }
-  .gallery-arrow { width: 38px; height: 38px; }
-  .gallery-prev { left: 4px; }
-  .gallery-next { right: 4px; }
+  .gallery-media-frame { grid-template-columns: 34px minmax(0, 1fr) 34px; gap: 6px; }
+  .gallery-arrow { width: 34px; height: 34px; }
+  .gallery-arrow :deep(svg) { width: 20px; height: 20px; }
   .gallery-thumbnails { gap: 8px; padding: 10px 12px max(12px, env(safe-area-inset-bottom)); }
   .gallery-thumbnail { width: 80px; height: 50px; }
 }
