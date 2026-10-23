@@ -44,7 +44,7 @@ export default {
     ...mapState(useProjectsStore, ["getPortfolios", "getPortfolio", "galleryVisible", "activeProjectID"]),
     ...mapState(usePostsStore, ["getPosts"]),
     featuredProjects() {
-      const featuredOrder = ["BitBank", "Sarmayex Market", "Sarmayex", "ReplyLane", "Skycast", "Metriland"];
+      const featuredOrder = ["BitBank", "Sarmayex Market", "ReplyLane", "Sarmayex", "Skycast", "Metriland"];
       const projects = this.getPortfolios();
       return featuredOrder
         .map(name => projects.find(project => project.name === name))

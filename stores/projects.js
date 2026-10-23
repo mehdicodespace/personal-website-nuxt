@@ -64,7 +64,7 @@ export default defineStore("projects", {
                     },
                 ],
                 mainMedia: 0,
-                used: ["react", "next", "vue", "nuxt", "redux", "pinia", "tailwind", "tradingview"],
+                used: ["react", "next", "vue", "nuxt", "redux", "pinia", "tailwind", "tradingview", "typescript"],
                 related_experience_id: 7
             },
             {
@@ -128,7 +128,7 @@ export default defineStore("projects", {
                     },
                 ],
                 mainMedia: 0,
-                used: ["nuxt", "pinia", "tailwind", "tradingview"],
+                used: ["nuxt", "pinia", "tailwind", "tradingview", "typescript"],
                 related_experience_id: 6
             },
             {
@@ -232,7 +232,7 @@ export default defineStore("projects", {
                     },
                 ],
                 mainMedia: 0,
-                used: ["nuxt", "pinia", "tailwind"],
+                used: ["nuxt", "pinia", "tailwind", "typescript"],
                 related_experience_id: 6,
             },
             {
@@ -312,7 +312,7 @@ export default defineStore("projects", {
                     },
                 ],
                 mainMedia: 0,
-                used: ["nuxt", "pinia", "tailwind"],
+                used: ["nuxt", "pinia", "tailwind", "typescript"],
                 related_experience_id: 4,
             },
             {
@@ -381,7 +381,7 @@ export default defineStore("projects", {
                     },
                 ],
                 mainMedia: 0,
-                used: ["nuxt", "pinia", "tailwind"],
+                used: ["nuxt", "pinia", "tailwind", "typescript"],
                 related_experience_id: 4,
             },
             {
@@ -428,7 +428,7 @@ export default defineStore("projects", {
                     },
                 ],
                 mainMedia: 0,
-                used: ["react", "next", "vue", "nuxt", "redux", "pinia", "tailwind"],
+                used: ["react", "next", "vue", "nuxt", "redux", "pinia", "tailwind", "typescript"],
                 related_experience_id: 1,
             },
             {
@@ -489,7 +489,7 @@ export default defineStore("projects", {
                     },
                 ],
                 mainMedia: 0,
-                used: ["nuxt", "tradingview"],
+                used: ["nuxt", "tradingview", "typescript"],
                 related_experience_id: 1,
             },
             {
@@ -543,7 +543,7 @@ export default defineStore("projects", {
                     },
                 ],
                 mainMedia: 0,
-                used: ["nuxt", "tradingview"],
+                used: ["nuxt", "tradingview", "typescript"],
                 related_experience_id: 1,
             },
             {
@@ -623,7 +623,7 @@ export default defineStore("projects", {
                     },
                 ],
                 mainMedia: 0,
-                used: ["nuxt", "tailwind"],
+                used: ["nuxt", "tailwind", "typescript"],
                 related_experience_id: 1,
             },
             {
@@ -698,7 +698,7 @@ export default defineStore("projects", {
                     }
                 ],
                 mainMedia: 0,
-                used: ["nuxt", "pinia", "tailwind"],
+                used: ["nuxt", "pinia", "tailwind", "typescript"],
                 related_experience_id: 7
             },
             {
@@ -841,7 +841,7 @@ export default defineStore("projects", {
                     },
                 ],
                 mainMedia: 0,
-                used: ["sass", "nuxt"],
+                used: ["sass", "nuxt", "typescript"],
                 related_experience_id: 2,
             },
             {
@@ -1063,9 +1063,9 @@ export default defineStore("projects", {
                 sourceCode: "https://github.com/mehdicodespace/replylane",
                 liveDemo: "https://replylane.netlify.app/",
                 media: [
-                    { type: "img", title: "ReplyLane landing page", src: "/projects/replylane/landing-dark.png" },
-                    { type: "img", title: "Application pipeline", src: "/projects/replylane/applications-dark.png" },
-                    { type: "img", title: "Connected inboxes", src: "/projects/replylane/inboxes-dark.png" },
+                    { type: "img", title: "ReplyLane landing page", src: "/projects/replylane/landing-dark.png", scroll: true, transition: "14s" },
+                    { type: "img", title: "Application pipeline", src: "/projects/replylane/applications-dark.png", scroll: true, transition: "12s" },
+                    { type: "img", title: "Connected inboxes", src: "/projects/replylane/inboxes-dark.png", scroll: true, transition: "12s" },
                 ],
                 mainMedia: 0,
                 used: ["next", "react", "typescript", "firebase"],

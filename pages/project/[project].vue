@@ -24,9 +24,13 @@
 
     <!-- Category Badge -->
     <span v-if="project.projectKind === 'independent'" class="mt-4 project-origin">
-      Independent project · GitHub
+      Independent project
     </span>
-    <span class="mt-4 bg-main-orange/20 text-main-orange px-4 py-2 rounded-full text-sm font-medium">
+    <span v-if="project.category === 'GitHub Projects'" class="mt-4 project-github-category">
+      <IconGithub aria-hidden="true" />
+      GitHub Projects
+    </span>
+    <span v-else class="mt-4 bg-main-orange/20 text-main-orange px-4 py-2 rounded-full text-sm font-medium">
       {{ project.category }}
     </span>
     <p class="sm:w-8/12 mx-auto mt-2 text-lg text-center">{{ project.description }}</p>
@@ -197,6 +201,8 @@ export default {
 
 <style scoped>
 .project-origin { padding: 5px 10px; border: 1px solid #f47a0855; border-radius: 999px; background: #f47a0814; color: #ffb16b; font-size: .82rem; font-weight: 600; }
+.project-github-category { display: inline-flex; align-items: center; gap: 7px; padding: 7px 12px; border: 1px solid #ffffff20; border-radius: 999px; background: #171819; color: #e3e5e8; font-size: .88rem; font-weight: 600; }
+.project-github-category svg { width: 16px; height: 16px; color: #f4f4f5; }
 .project-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 16px; }
 .project-links a { display: inline-flex; align-items: center; gap: 8px; min-height: 42px; padding: 0 16px; border: 1px solid #ffffff26; border-radius: 9px; color: #f3f3f3; font-size: .94rem; font-weight: 600; transition: border-color .2s, color .2s, background .2s; }
 .project-links a:hover { border-color: #f47a0880; color: #ffb16b; background: #f47a0812; }

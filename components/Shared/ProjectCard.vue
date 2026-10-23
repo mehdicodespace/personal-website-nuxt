@@ -16,7 +16,11 @@
     <div class="project-card-copy">
       <div class="project-card-meta" data-skeleton>
         <span v-if="project.projectKind === 'independent'" class="project-kind">Independent</span>
-        <p class="project-card-category">{{ project.category }}</p>
+        <span v-if="project.category === 'GitHub Projects'" class="project-card-category github-project-category">
+          <IconGithub aria-hidden="true" />
+          <span>GitHub Projects</span>
+        </span>
+        <p v-else class="project-card-category">{{ project.category }}</p>
       </div>
       <h3 data-skeleton><NuxtLink :to="`/project/${project.name}`">{{ project.name }}</NuxtLink></h3>
       <p class="project-card-title" data-skeleton>{{ project.title }}</p>
@@ -69,6 +73,8 @@ function openProject(event) {
 .project-card-copy { padding: 20px; }
 .project-card-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; min-height: 20px; margin-bottom: 9px; }
 .project-card-category { color: #ffffff80; font-size: .8rem; }
+.github-project-category { display: inline-flex; align-items: center; gap: 5px; padding: 3px 8px; border: 1px solid #ffffff17; border-radius: 999px; background: #161718; color: #d5d7da; font-size: .72rem; font-weight: 550; }
+.github-project-category svg { width: 13px; height: 13px; color: #e6e8eb; }
 .project-kind { display: inline-flex; align-items: center; padding: 3px 7px; border: 1px solid #f47a0840; border-radius: 999px; color: #ffb16b; font-size: .68rem; font-weight: 650; letter-spacing: .025em; line-height: 1; }
 .project-card h3 { font-size: 1.5rem; font-weight: 700; color: #f47a08; }
 .project-card-title { margin-top: 5px; color: #ffffffdf; }
