@@ -6,7 +6,7 @@
   <Meta property="og:description" :content="seoDescription" />
 
   <div
-    class="page-content-enter relative bg-dark/70 rounded-lg flex flex-col items-center py-10 px-4 sm:px-8 lg:px-12 xl:px-16 border border-neutral-700 mx-8 sm:mx-12 xl:mx-20 mt-24 sm:mt-30"
+    class="page-content-enter relative bg-dark/70 rounded-lg flex flex-col py-8 px-4 sm:px-8 lg:px-12 xl:px-16 border border-neutral-700 mx-4 sm:mx-8 xl:mx-16 mt-24 sm:mt-30"
   >
     <nuxt-link
       :to="{ path: '/portfolios' }"
@@ -17,34 +17,33 @@
       </button>
       <span class="text-main-orange font-bold text-lg">Portfolios</span>
     </nuxt-link>
-    <span class="inline-block font-medium text-3xl text-center">
-      <span class="text-main-orange mr-2">{{ project.name }}</span>
-      <span>{{ project.title }}</span>
-    </span>
+    <section class="project-overview" aria-label="Project overview">
+      <div class="project-overview-heading">
+        <h1 class="project-title">
+          <span>{{ project.name }}</span>
+          <span>{{ project.title }}</span>
+        </h1>
+        <div class="project-labels">
+          <span v-if="project.projectKind === 'independent'" class="project-origin">Independent</span>
+          <span v-if="project.category === 'GitHub Projects'" class="project-github-category">
+            <IconGithub aria-hidden="true" />
+            GitHub Projects
+          </span>
+          <span v-else class="project-category">{{ project.category }}</span>
+        </div>
+      </div>
+      <p class="project-description">{{ project.description }}</p>
 
-    <!-- Category Badge -->
-    <span v-if="project.projectKind === 'independent'" class="mt-4 project-origin">
-      Independent project
-    </span>
-    <span v-if="project.category === 'GitHub Projects'" class="mt-4 project-github-category">
-      <IconGithub aria-hidden="true" />
-      GitHub Projects
-    </span>
-    <span v-else class="mt-4 bg-main-orange/20 text-main-orange px-4 py-2 rounded-full text-sm font-medium">
-      {{ project.category }}
-    </span>
-    <p class="sm:w-8/12 mx-auto mt-2 text-lg text-center">{{ project.description }}</p>
-
-    <div v-if="project.sourceCode || project.liveDemo" class="project-links">
-      <a v-if="project.sourceCode" :href="project.sourceCode" target="_blank" rel="noopener noreferrer">
-        Source code <span aria-hidden="true">↗</span>
-      </a>
-      <a v-if="project.liveDemo" :href="project.liveDemo" target="_blank" rel="noopener noreferrer" class="project-live-link">
-        Live demo <span aria-hidden="true">↗</span>
-      </a>
-    </div>
-
-    <ul class="flex gap-4 mt-4">
+      <div class="project-overview-footer">
+        <div v-if="project.sourceCode || project.liveDemo" class="project-links">
+          <a v-if="project.sourceCode" :href="project.sourceCode" target="_blank" rel="noopener noreferrer">
+            Source code <span aria-hidden="true">↗</span>
+          </a>
+          <a v-if="project.liveDemo" :href="project.liveDemo" target="_blank" rel="noopener noreferrer" class="project-live-link">
+            Live demo <span aria-hidden="true">↗</span>
+          </a>
+        </div>
+        <ul class="project-skills" aria-label="Technologies used">
       <li v-for="skill in project.used" :key="skill">
         <img
           :src="`/imgs/skills/${skill}.svg`"
@@ -53,7 +52,9 @@
           :title="skill"
         />
       </li>
-    </ul>
+        </ul>
+      </div>
+    </section>
     <div
       class="w-full grid lg:grid-cols-4 sm:(grid-cols-3 grid-rows-3) xs:(grid-rows-4 grid-cols-2) gap-4 mt-8"
     >
@@ -200,14 +201,35 @@ export default {
 </script>
 
 <style scoped>
-.project-origin { padding: 5px 10px; border: 1px solid #f47a0855; border-radius: 999px; background: #f47a0814; color: #ffb16b; font-size: .82rem; font-weight: 600; }
-.project-github-category { display: inline-flex; align-items: center; gap: 7px; padding: 7px 12px; border: 1px solid #ffffff20; border-radius: 999px; background: #171819; color: #e3e5e8; font-size: .88rem; font-weight: 600; }
-.project-github-category svg { width: 16px; height: 16px; color: #f4f4f5; }
-.project-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 16px; }
-.project-links a { display: inline-flex; align-items: center; gap: 8px; min-height: 42px; padding: 0 16px; border: 1px solid #ffffff26; border-radius: 9px; color: #f3f3f3; font-size: .94rem; font-weight: 600; transition: border-color .2s, color .2s, background .2s; }
+.project-overview { width: 100%; margin: 8px 0 4px; padding: 20px 22px; border: 1px solid #ffffff16; border-radius: 14px; background: linear-gradient(110deg, #ffffff05, #f47a0808); text-align: left; }
+.project-overview-heading { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 18px; }
+.project-title { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 11px; margin: 0; font-size: clamp(1.5rem, 2.2vw, 2rem); font-weight: 700; line-height: 1.2; }
+.project-title span:first-child { color: #f47a08; }
+.project-title span:last-child { color: #f3f4f6; }
+.project-labels { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.project-origin, .project-category, .project-github-category { display: inline-flex; align-items: center; min-height: 30px; padding: 4px 10px; border: 1px solid #ffffff1d; border-radius: 999px; font-size: .78rem; font-weight: 600; line-height: 1; white-space: nowrap; }
+.project-origin { border-color: #f47a0855; background: #f47a0814; color: #ffb16b; }
+.project-category { background: #f47a0814; color: #ffb16b; }
+.project-github-category { gap: 6px; background: #171819; color: #e3e5e8; }
+.project-github-category svg { width: 15px; height: 15px; color: #f4f4f5; }
+.project-description { max-width: 1100px; margin: 12px 0 0; color: #ffffffd9; font-size: 1rem; line-height: 1.55; }
+.project-overview-footer { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 20px; margin-top: 15px; }
+.project-links { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.project-links a { display: inline-flex; align-items: center; gap: 7px; min-height: 38px; padding: 0 13px; border: 1px solid #ffffff26; border-radius: 8px; color: #f3f3f3; font-size: .88rem; font-weight: 600; transition: border-color .2s, color .2s, background .2s; }
 .project-links a:hover { border-color: #f47a0880; color: #ffb16b; background: #f47a0812; }
 .project-links .project-live-link { border-color: #f47a0870; color: #ffb16b; }
 .project-links .project-live-link:hover { background: #f47a0824; }
+.project-skills { display: flex; flex-wrap: wrap; align-items: center; gap: 11px; margin: 0; padding: 0; list-style: none; }
+.project-skills img { display: block; width: 25px; height: 25px; object-fit: contain; }
+@media (max-width: 640px) {
+  .project-overview { padding: 16px; }
+  .project-overview-heading { align-items: flex-start; }
+  .project-title { font-size: 1.45rem; }
+  .project-description { font-size: .94rem; }
+  .project-overview-footer { align-items: flex-start; }
+  .project-skills { gap: 10px; }
+}
+@media (prefers-reduced-motion: reduce) { .project-links a { transition: none; } }
 .gallery {
   position: absolute;
   bottom: 0;

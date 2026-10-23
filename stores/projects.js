@@ -1080,9 +1080,9 @@ export default defineStore("projects", {
                 sourceCode: "https://github.com/mehdicodespace/skycast-weather",
                 liveDemo: "https://skycast-weather-mehdispace.netlify.app/",
                 media: [
-                    { type: "img", title: "Forecast dashboard", src: "/projects/skycast-weather/desktop.png" },
-                    { type: "img", title: "Dark theme", src: "/projects/skycast-weather/dark.png" },
-                    { type: "img", title: "Mobile forecast", src: "/projects/skycast-weather/mobile.png", mobile: true },
+                    { type: "img", title: "Forecast dashboard", src: "/projects/skycast-weather/desktop.png", scroll: true, transition: "12s" },
+                    { type: "img", title: "Dark theme", src: "/projects/skycast-weather/dark.png", scroll: true, transition: "12s" },
+                    { type: "img", title: "Mobile forecast", src: "/projects/skycast-weather/mobile.png", mobile: true, scroll: true, transition: "16s" },
                 ],
                 mainMedia: 0,
                 used: ["react", "typescript", "vite"],
@@ -1097,7 +1097,7 @@ export default defineStore("projects", {
                 sourceCode: "https://github.com/mehdicodespace/kanban-workspace",
                 liveDemo: "https://kanban-mehdispace.netlify.app/",
                 media: [
-                    { type: "img", title: "Kanban Workspace landing page", src: "/projects/kanban-workspace/preview-landing.png" },
+                    { type: "img", title: "Kanban Workspace landing page", src: "/projects/kanban-workspace/preview-landing.png", scroll: true, transition: "12s" },
                     { type: "img", title: "Task board dashboard", src: "/projects/kanban-workspace/preview-dashboard.png" },
                     { type: "img", title: "Create task form", src: "/projects/kanban-workspace/preview-create-task.png" },
                 ],
@@ -1114,8 +1114,8 @@ export default defineStore("projects", {
                 sourceCode: "https://github.com/mehdicodespace/countries-explorer",
                 liveDemo: "https://countries-explorer-mehdispace.netlify.app/",
                 media: [
-                    { type: "img", title: "Country directory", src: "/projects/countries-explorer/countries.png" },
-                    { type: "img", title: "Country details", src: "/projects/countries-explorer/country-detail.png" },
+                    { type: "img", title: "Country directory", src: "/projects/countries-explorer/countries.png", scroll: true, transition: "12s" },
+                    { type: "img", title: "Country details", src: "/projects/countries-explorer/country-detail.png", scroll: true, transition: "12s" },
                 ],
                 mainMedia: 0,
                 used: ["vue", "typescript", "pinia", "tailwind"],
