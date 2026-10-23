@@ -33,7 +33,7 @@ onUnmounted(() => {
 </script>
 <style scoped>
 .site-header { position: relative; z-index: 60; padding: 1.25rem 1rem .75rem; }
-.header-shell { box-sizing: border-box; display: flex; width: 100%; max-width: 1720px; align-items: center; gap: clamp(1rem, 2.3vw, 2.5rem); margin-inline: auto; }
+.header-shell { box-sizing: border-box; display: flex; width: 100%; align-items: center; gap: clamp(1rem, 2.3vw, 2.5rem); margin-inline: auto; }
 .header-brand { flex: 0 0 auto; }
 .header-brand :deep(img) { width: 68px; }
 .header-resume { flex: 0 0 auto; margin-left: auto; }
