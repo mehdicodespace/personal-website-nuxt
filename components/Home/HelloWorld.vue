@@ -10,6 +10,21 @@
       <div class="intro-summary-header">
         <span><i aria-hidden="true"></i> SENIOR FRONT-END DEVELOPER</span>
       </div>
+      <svg class="intro-trace" viewBox="0 0 440 130" fill="none" aria-hidden="true">
+        <path class="intro-trace-base" d="M10 100H88L126 61H190L226 100H278L326 38H372L398 13H438" />
+        <path class="intro-trace-dash" d="M10 100H88L126 61H190L226 100H278L326 38H372L398 13H438" />
+        <circle class="intro-trace-node" cx="88" cy="100" r="4" />
+        <circle class="intro-trace-node" cx="126" cy="61" r="4" />
+        <circle class="intro-trace-node" cx="190" cy="61" r="4" />
+        <circle class="intro-trace-node" cx="226" cy="100" r="4" />
+        <circle class="intro-trace-node" cx="278" cy="100" r="4" />
+        <circle class="intro-trace-node" cx="326" cy="38" r="4" />
+        <circle class="intro-trace-node" cx="372" cy="38" r="4" />
+        <circle class="intro-trace-node" cx="398" cy="13" r="4" />
+        <circle class="intro-trace-dot" cx="10" cy="100" r="5">
+          <animateMotion dur="7s" repeatCount="indefinite" path="M0 0H78L116 -39H180L216 0H268L316 -62H362L388 -87H428" />
+        </circle>
+      </svg>
       <div class="intro-experience">
         <strong>8<span>+</span></strong>
         <div>
@@ -41,6 +56,12 @@
 .intro-role { color: #ffffffb3; margin: 12px 0 6px; font-size: 1.5rem; }
 .intro-summary { position: relative; overflow: hidden; padding: clamp(20px, 2.4vw, 30px); border: 1px solid #ffffff15; border-radius: 18px; background: radial-gradient(ellipse at 94% 4%, #f47a0817, transparent 38%), linear-gradient(145deg, #ffffff07, #ffffff02); }
 .intro-summary::after { position: absolute; right: -74px; bottom: -112px; width: 250px; height: 250px; border: 1px solid #f47a081c; border-radius: 50%; box-shadow: 0 0 0 26px #f47a0806, 0 0 0 54px #f47a0804; content: ''; pointer-events: none; transform-origin: center; animation: intro-orbit-pulse 8s ease-in-out infinite; }
+.intro-summary > *:not(.intro-trace) { position: relative; z-index: 1; }
+.intro-trace { position: absolute; z-index: 0; top: 38%; right: 1%; width: 43%; height: auto; overflow: visible; opacity: .56; pointer-events: none; }
+.intro-trace-base { stroke: #f47a0840; stroke-width: 8; stroke-linecap: round; stroke-linejoin: round; }
+.intro-trace-dash { stroke: #ff9b42; stroke-width: 1.5; stroke-dasharray: 10 8; stroke-linecap: round; stroke-linejoin: round; opacity: .72; }
+.intro-trace-node { fill: #171717; stroke: #ff8b28; stroke-width: 2; }
+.intro-trace-dot { fill: #ffd5a6; filter: drop-shadow(0 0 5px #ff8b28); }
 .intro-summary-header { display: flex; align-items: center; justify-content: space-between; gap: 12px; color: #ffffff80; font-size: .68rem; font-weight: 700; letter-spacing: .13em; }
 .intro-summary-header > span:first-child { display: inline-flex; align-items: center; gap: 8px; color: #ff9b42; }
 .intro-summary-header i { width: 7px; height: 7px; border-radius: 50%; background: #ff8b28; box-shadow: 0 0 12px #ff8b2890; }
@@ -61,7 +82,8 @@
 @media (min-width: 550px) { .home-intro { padding-inline: 3rem; } }
 @media (min-width: 800px) { .home-intro { grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); align-items: center; gap: 2rem; } }
 @media (min-width: 1280px) { .home-intro { padding-inline: 5rem; } }
+@media (max-width: 799px) { .intro-trace { top: 48%; right: -5%; width: 72%; opacity: .3; } }
 @media (max-width: 420px) { .intro-summary-header { font-size: .58rem; letter-spacing: .09em; } .intro-domains { gap: 6px; font-size: .74rem; } .intro-skills { gap: 6px; } .intro-skills li { width: 34px; height: 34px; } .intro-skills img { width: 19px; height: 19px; } }
 @keyframes intro-orbit-pulse { 0%, 100% { opacity: .48; transform: scale(.96); } 50% { opacity: .9; transform: scale(1.035); } }
-@media (prefers-reduced-motion: reduce) { .intro-summary::after { animation: none; } .intro-skills li, .intro-more { transition: none; } }
+@media (prefers-reduced-motion: reduce) { .intro-summary::after { animation: none; } .intro-trace-dot animateMotion { display: none; } .intro-skills li, .intro-more { transition: none; } }
 </style>
